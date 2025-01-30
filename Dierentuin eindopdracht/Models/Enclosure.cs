@@ -6,12 +6,18 @@ namespace Dierentuin_eindopdracht.Models
     {
         [Required]
         public string Id { get; set; }
+
         public string Name { get; set; }
-        public string Animals { get; set; }
+
+        [Required(ErrorMessage = "an enclosure always has a Size")]
+        public double Size { get; set; }
+
+        //enums
         ZooEnums.Climate Climate { get; set; }
         ZooEnums.HabitatType Habitat { get; set; }
         ZooEnums.SecurityLevel SecurityLevel { get; set; }
-        public double Size { get; set; }
 
+        //navigation properties
+        public ICollection<Animal> Animals { get; set; }
     }
 }

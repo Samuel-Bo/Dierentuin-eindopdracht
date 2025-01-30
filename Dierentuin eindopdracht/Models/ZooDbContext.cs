@@ -1,6 +1,11 @@
-﻿namespace Dierentuin_eindopdracht.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Dierentuin_eindopdracht.Models
 {
-    public class ZooDbContext
+    public class ZooDbContext : DbContext
     {
+        public ZooDbContext(DbContextOptions<ZooDbContext> options) : base(options)
+        {
+        }
     }
 }

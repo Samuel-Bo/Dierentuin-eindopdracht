@@ -1,3 +1,6 @@
+using Dierentuin_eindopdracht.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace Dierentuin_eindopdracht
 {
     public class Program
@@ -10,6 +13,11 @@ namespace Dierentuin_eindopdracht
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddDbContext<ZooDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
