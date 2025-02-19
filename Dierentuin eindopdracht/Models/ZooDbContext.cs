@@ -12,23 +12,22 @@ namespace Dierentuin_eindopdracht.Models
         {
         }
 
-        //dbsets
-        public DbSet<Animal> animals;
-        public DbSet<Enclosure> enclosures;
-        public DbSet<Category> categories;
-        public DbSet<Zoo> zoos;
+        // DbSets
+        public DbSet<Animal> Animals { get; set; }
+        public DbSet<Enclosure> Enclosures { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Zoo> Zoos { get; set; }
 
-        //seeding temps
+        // Temporary seeding lists
         public static List<Zoo> _zoos;
         public static List<Enclosure> _enclosures;
         public static List<Animal> _animals;
         public static List<Category> _categories;
 
-        //flag
+        // Flag to check if seeding has already been done
         private bool s_seeded = false;
 
-        //seeding
-
+        // Seeding data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -45,9 +44,9 @@ namespace Dierentuin_eindopdracht.Models
                 .HasMany(c => c.Animals)
                 .WithOne(a => a.Category)
                 .HasForeignKey(a => a.CategoryId)
-                .OnDelete(DeleteBehavior.SetNull); // Sets CategoryId to null when Category is deleted
+                .OnDelete(DeleteBehavior.SetNull); // Set CategoryId to null when Category is deleted
 
-            Seed();
+            Seed(); // Seeding data
             modelBuilder.Entity<Animal>().HasData(_animals);
             modelBuilder.Entity<Enclosure>().HasData(_enclosures);
             modelBuilder.Entity<Category>().HasData(_categories);
@@ -59,20 +58,19 @@ namespace Dierentuin_eindopdracht.Models
             if (s_seeded) { return; }
             s_seeded = true;
 
-            const int zooAmount = 10;
-            const int enclosureAmount = zooAmount * 2;
-            const int animalAmount = enclosureAmount * 2;
-            const int categoryAmount = 10;
+            const int enclosureAmount = 6;  // Number of enclosures
+            const int animalAmount = enclosureAmount * 5;  // Number of animals
+            const int categoryAmount = 5;  // Number of categories
 
-            //hard to find proper seeding names so made array's
-            String[] categorieNames = new[] { "Mammals", "Reptiles", "Birds", "Fishes", "Insects" };
-            String[] speciesNames = new[] { "Lion", "Tiger", "Elephant", "Giraffe", "Penguin", "Kangaroo", "Cobra", "Eagle" };
+            // Category names
+            String[] categoryNames = new[] { "Mammals", "Reptiles", "Birds", "Fishes", "Insects" };
+            String[] speciesNames = new[] { "Lion", "Tiger", "Elephant", "Giraffe", "Penguin"};
 
-            //Zoo fake data
+            // One single zoo
             _zoos = new Faker<Zoo>()
-                .RuleFor(o => o.ZooId, f => f.IndexFaker + 1)
-                .RuleFor(o => o.Name, f => f.Name.FullName())
-                .Generate(zooAmount);
+                .RuleFor(o => o.ZooId, f => 1)  // Single Zoo
+                .RuleFor(o => o.Name, f => f.Company.CompanyName())
+                .Generate(1);  // Only 1 zoo because the web app manages ONE zoo only
 
             // Enclosure fake data
             _enclosures = new Faker<Enclosure>()
@@ -87,7 +85,7 @@ namespace Dierentuin_eindopdracht.Models
             // Category fake data
             _categories = new Faker<Category>()
                 .RuleFor(o => o.CategoryId, f => f.IndexFaker + 1)
-                .RuleFor(o => o.Name, f => f.PickRandom(categorieNames))
+                .RuleFor(o => o.Name, f => f.PickRandom(categoryNames))
                 .Generate(categoryAmount);
 
             // Animal fake data
@@ -95,7 +93,6 @@ namespace Dierentuin_eindopdracht.Models
                 .RuleFor(o => o.AnimalId, f => f.IndexFaker + 1)
                 .RuleFor(o => o.Name, f => f.Name.FirstName())
                 .RuleFor(o => o.Species, f => f.PickRandom(speciesNames))
-                .RuleFor(o => o.Prey, f => f.Lorem.Word())
                 .RuleFor(o => o.SpaceRequirement, f => f.Random.Double(10, 500))
                 .RuleFor(o => o.FeedingTime, f => f.Date.Timespan(TimeSpan.FromHours(2)))
                 .RuleFor(o => o.Arise, f => f.Date.Timespan(TimeSpan.FromHours(6)))
@@ -105,31 +102,24 @@ namespace Dierentuin_eindopdracht.Models
                 .RuleFor(o => o.ActivityPattern, f => f.PickRandom<ZooEnums.ActivityPattern>())
                 .RuleFor(o => o.SecurityRequirment, f => f.PickRandom<ZooEnums.SecurityLevel>())
                 .Generate(animalAmount);
-            
-            //seeding relationships between models
-            foreach (var zoo in _zoos)
+
+            // Assigning Enclosures, Categories, and Zoo to Animals
+            foreach (var animal in _animals)
             {
-                // Enclosure >---| Zoo
-                _enclosures.OrderBy(x => Random.Shared.Next())
-                    .Where(e => e.ZooId == 0)
-                    .Take(enclosureAmount / zooAmount)  // Equally tries to distribute enclosures among zoos
-                    .ToList().ForEach(e => e.ZooId = zoo.ZooId);
+                // Assign a random enclosure from the zoo
+                animal.EnclosureId = _enclosures.OrderBy(e => Random.Shared.Next()).FirstOrDefault().EnclosureId;
 
-                //  Animals >---| Enclosure (within the Same Zoo)
-                _animals.OrderBy(x => Random.Shared.Next())
-                    .Where(a => a.ZooId == 0)  
-                    .Take(animalAmount / zooAmount)  // Equally tries to distribute animals among zoos
-                    .ToList().ForEach(a =>
-                    {
-                        // Current Zoo that's being interated through get's a new animal
-                        a.ZooId = zoo.ZooId;
+                // Assign a random category
+                animal.CategoryId = _categories.OrderBy(c => Random.Shared.Next()).FirstOrDefault().CategoryId;
 
-                        // Makes it so animal gets enclosure within the same zoo
-                        a.EnclosureId = _enclosures.Where(e => e.ZooId == zoo.ZooId).OrderBy(x => Random.Shared.Next()).FirstOrDefault().EnclosureId;
+                // Assign the single zoo to all animals
+                animal.ZooId = _zoos.FirstOrDefault()?.ZooId ?? 1;
+            }
 
-                        // Random category for the animal
-                        a.CategoryId = _categories.OrderBy(c => Random.Shared.Next()).FirstOrDefault().CategoryId;
-                    });
+            foreach(var enclosure in _enclosures)
+            {
+                //Assing every enclosure to the Zoo
+                enclosure.ZooId = _zoos.FirstOrDefault()?.ZooId ?? 1;
             }
         }
     }

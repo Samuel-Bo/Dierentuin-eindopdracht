@@ -29,9 +29,9 @@ namespace Dierentuin_eindopdracht.Models
         public int EnclosureId { get; set; } //f-key
         public int CategoryId  { get; set; }// f-key
         public int ZooId { get; set; } // f-key
-        public Enclosure Enclosure { get; set; } = null;
-        public Category Category { get; set; } = null;
-        public Zoo Zoo { get; set; }
+        public Enclosure Enclosure { get; set; } = null;//enclosure name
+        public Category Category { get; set; } = null; //category name
+        public Zoo Zoo { get; set; }//zoo nam
 
 
     }
