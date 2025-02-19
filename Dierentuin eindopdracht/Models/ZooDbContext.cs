@@ -93,6 +93,7 @@ namespace Dierentuin_eindopdracht.Models
                 .RuleFor(o => o.AnimalId, f => f.IndexFaker + 1)
                 .RuleFor(o => o.Name, f => f.Name.FirstName())
                 .RuleFor(o => o.Species, f => f.PickRandom(speciesNames))
+                .RuleFor(o => o.Prey, f => f.PickRandom(speciesNames))
                 .RuleFor(o => o.SpaceRequirement, f => f.Random.Double(10, 500))
                 .RuleFor(o => o.FeedingTime, f => f.Date.Timespan(TimeSpan.FromHours(2)))
                 .RuleFor(o => o.Arise, f => f.Date.Timespan(TimeSpan.FromHours(6)))
