@@ -1,3 +1,4 @@
+using Bogus;
 using Dierentuin_eindopdracht.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +13,10 @@ namespace Dierentuin_eindopdracht
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
-
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
             builder.Services.AddDbContext<ZooDbContext>(options =>
-            options.UseSqlServer(connectionString));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
