@@ -1,8 +1,8 @@
 ﻿namespace Dierentuin_eindopdracht.Models
 {
-    public class Category
+    public class AnimalCategory
     {
-        public int CategoryId { get; set; }
+        public int AnimalCategoryId { get; set; }
         public string Name { get; set; }
 
         //navigation properties

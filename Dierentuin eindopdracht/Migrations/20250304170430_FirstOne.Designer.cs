@@ -4,6 +4,7 @@ using Dierentuin_eindopdracht.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dierentuin_eindopdracht.Migrations
 {
     [DbContext(typeof(ZooDbContext))]
-    partial class ZooDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250304170430_FirstOne")]
+    partial class FirstOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,9 +51,8 @@ namespace Dierentuin_eindopdracht.Migrations
                     b.Property<int?>("EnclosureId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FeedingTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<TimeSpan>("FeedingTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -96,7 +98,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(639929576997),
                             DietaryClass = 4,
                             EnclosureId = 6,
-                            FeedingTime = "Kip",
+                            FeedingTime = new TimeSpan(24439393770),
                             Name = "Grayson",
                             Prey = "Giraffe",
                             SecurityRequirement = 2,
@@ -114,7 +116,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(99330009689),
                             DietaryClass = 3,
                             EnclosureId = 4,
-                            FeedingTime = "Appel",
+                            FeedingTime = new TimeSpan(5365199963),
                             Name = "Jamal",
                             Prey = "Zebra",
                             SecurityRequirement = 1,
@@ -132,7 +134,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(410371992042),
                             DietaryClass = 3,
                             EnclosureId = 3,
-                            FeedingTime = "Tomaat",
+                            FeedingTime = new TimeSpan(54176958229),
                             Name = "Shawna",
                             Prey = "Giraffe",
                             SecurityRequirement = 1,
@@ -150,7 +152,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(399521969314),
                             DietaryClass = 4,
                             EnclosureId = 5,
-                            FeedingTime = "Ei",
+                            FeedingTime = new TimeSpan(66083643802),
                             Name = "Lisandro",
                             Prey = "Crocodile",
                             SecurityRequirement = 1,
@@ -168,7 +170,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(243734136646),
                             DietaryClass = 1,
                             EnclosureId = 5,
-                            FeedingTime = "Kip",
+                            FeedingTime = new TimeSpan(25330644821),
                             Name = "Ian",
                             Prey = "Elephant",
                             SecurityRequirement = 1,
@@ -186,7 +188,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(186054146388),
                             DietaryClass = 3,
                             EnclosureId = 3,
-                            FeedingTime = "Pasta",
+                            FeedingTime = new TimeSpan(36385736341),
                             Name = "Thad",
                             Prey = "Lion",
                             SecurityRequirement = 1,
@@ -204,7 +206,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(94591060872),
                             DietaryClass = 1,
                             EnclosureId = 5,
-                            FeedingTime = "Pasta",
+                            FeedingTime = new TimeSpan(41974582345),
                             Name = "Leon",
                             Prey = "Lion",
                             SecurityRequirement = 2,
@@ -222,7 +224,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(315905564336),
                             DietaryClass = 3,
                             EnclosureId = 6,
-                            FeedingTime = "Kip",
+                            FeedingTime = new TimeSpan(22879923552),
                             Name = "Aisha",
                             Prey = "Crocodile",
                             SecurityRequirement = 1,
@@ -240,7 +242,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(285113426103),
                             DietaryClass = 3,
                             EnclosureId = 6,
-                            FeedingTime = "Rijst",
+                            FeedingTime = new TimeSpan(43451053517),
                             Name = "Roosevelt",
                             Prey = "Penguin",
                             SecurityRequirement = 1,
@@ -258,7 +260,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(167761950385),
                             DietaryClass = 3,
                             EnclosureId = 6,
-                            FeedingTime = "Tomaat",
+                            FeedingTime = new TimeSpan(51812972525),
                             Name = "Amely",
                             Prey = "Zebra",
                             SecurityRequirement = 3,
@@ -276,7 +278,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(191294216137),
                             DietaryClass = 2,
                             EnclosureId = 1,
-                            FeedingTime = "Ei",
+                            FeedingTime = new TimeSpan(70624234612),
                             Name = "Quinn",
                             Prey = "Elephant",
                             SecurityRequirement = 2,
@@ -294,7 +296,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(468805838904),
                             DietaryClass = 2,
                             EnclosureId = 5,
-                            FeedingTime = "Melk",
+                            FeedingTime = new TimeSpan(62611278876),
                             Name = "Laverna",
                             Prey = "Tiger",
                             SecurityRequirement = 3,
@@ -312,7 +314,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(70577464565),
                             DietaryClass = 2,
                             EnclosureId = 4,
-                            FeedingTime = "Kip",
+                            FeedingTime = new TimeSpan(25083270684),
                             Name = "Ona",
                             Prey = "Crocodile",
                             SecurityRequirement = 2,
@@ -330,7 +332,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(622210020716),
                             DietaryClass = 4,
                             EnclosureId = 1,
-                            FeedingTime = "Appel",
+                            FeedingTime = new TimeSpan(3653405251),
                             Name = "Chyna",
                             Prey = "Crocodile",
                             SecurityRequirement = 2,
@@ -348,7 +350,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(220119403796),
                             DietaryClass = 1,
                             EnclosureId = 6,
-                            FeedingTime = "Broccoli",
+                            FeedingTime = new TimeSpan(19979382051),
                             Name = "Griffin",
                             Prey = "Crocodile",
                             SecurityRequirement = 3,
@@ -366,7 +368,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(683754096838),
                             DietaryClass = 2,
                             EnclosureId = 4,
-                            FeedingTime = "Appel",
+                            FeedingTime = new TimeSpan(3619670270),
                             Name = "Orville",
                             Prey = "Giraffe",
                             SecurityRequirement = 3,
@@ -384,7 +386,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(289542201017),
                             DietaryClass = 2,
                             EnclosureId = 5,
-                            FeedingTime = "Tomaat",
+                            FeedingTime = new TimeSpan(57129796535),
                             Name = "Frida",
                             Prey = "Wolf",
                             SecurityRequirement = 1,
@@ -402,7 +404,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(770496067041),
                             DietaryClass = 3,
                             EnclosureId = 3,
-                            FeedingTime = "Banaan",
+                            FeedingTime = new TimeSpan(9242950943),
                             Name = "Rupert",
                             Prey = "Zebra",
                             SecurityRequirement = 1,
@@ -420,7 +422,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(697386550897),
                             DietaryClass = 2,
                             EnclosureId = 1,
-                            FeedingTime = "Zalm",
+                            FeedingTime = new TimeSpan(31555508833),
                             Name = "Nash",
                             Prey = "Zebra",
                             SecurityRequirement = 3,
@@ -438,7 +440,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(428877822405),
                             DietaryClass = 5,
                             EnclosureId = 2,
-                            FeedingTime = "Banaan",
+                            FeedingTime = new TimeSpan(14361095182),
                             Name = "Mariane",
                             Prey = "Elephant",
                             SecurityRequirement = 1,
@@ -456,7 +458,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(454837718490),
                             DietaryClass = 2,
                             EnclosureId = 1,
-                            FeedingTime = "Banaan",
+                            FeedingTime = new TimeSpan(10821104356),
                             Name = "Arden",
                             Prey = "Eagle",
                             SecurityRequirement = 2,
@@ -474,7 +476,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(746942967934),
                             DietaryClass = 1,
                             EnclosureId = 6,
-                            FeedingTime = "Ei",
+                            FeedingTime = new TimeSpan(69495288211),
                             Name = "Easter",
                             Prey = "Penguin",
                             SecurityRequirement = 2,
@@ -492,7 +494,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(727653002549),
                             DietaryClass = 4,
                             EnclosureId = 3,
-                            FeedingTime = "Pasta",
+                            FeedingTime = new TimeSpan(42345596158),
                             Name = "Victor",
                             Prey = "Wolf",
                             SecurityRequirement = 2,
@@ -510,7 +512,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(386270163127),
                             DietaryClass = 1,
                             EnclosureId = 2,
-                            FeedingTime = "Broccoli",
+                            FeedingTime = new TimeSpan(19631051881),
                             Name = "Fred",
                             Prey = "Eagle",
                             SecurityRequirement = 2,
@@ -528,7 +530,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(715448422326),
                             DietaryClass = 3,
                             EnclosureId = 3,
-                            FeedingTime = "Appel",
+                            FeedingTime = new TimeSpan(6309776615),
                             Name = "Claud",
                             Prey = "Penguin",
                             SecurityRequirement = 1,
@@ -546,7 +548,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(191489009052),
                             DietaryClass = 3,
                             EnclosureId = 5,
-                            FeedingTime = "Rijst",
+                            FeedingTime = new TimeSpan(45376925020),
                             Name = "Oceane",
                             Prey = "Zebra",
                             SecurityRequirement = 2,
@@ -564,7 +566,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(523820289439),
                             DietaryClass = 3,
                             EnclosureId = 5,
-                            FeedingTime = "Broccoli",
+                            FeedingTime = new TimeSpan(19547945613),
                             Name = "Paula",
                             Prey = "Wolf",
                             SecurityRequirement = 1,
@@ -582,7 +584,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(628046762547),
                             DietaryClass = 1,
                             EnclosureId = 3,
-                            FeedingTime = "Melk",
+                            FeedingTime = new TimeSpan(61647658440),
                             Name = "Gayle",
                             Prey = "Zebra",
                             SecurityRequirement = 1,
@@ -600,7 +602,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(179691622088),
                             DietaryClass = 3,
                             EnclosureId = 4,
-                            FeedingTime = "Melk",
+                            FeedingTime = new TimeSpan(62727033797),
                             Name = "Mireille",
                             Prey = "Eagle",
                             SecurityRequirement = 3,
@@ -618,7 +620,7 @@ namespace Dierentuin_eindopdracht.Migrations
                             BedTime = new TimeSpan(720225221839),
                             DietaryClass = 3,
                             EnclosureId = 4,
-                            FeedingTime = "Pasta",
+                            FeedingTime = new TimeSpan(36771497375),
                             Name = "Virginie",
                             Prey = "Zebra",
                             SecurityRequirement = 1,

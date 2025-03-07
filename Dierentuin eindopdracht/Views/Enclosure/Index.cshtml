@@ -1,0 +1,49 @@
+﻿@model List<Enclosure>
+@{
+}
+
+<h2 class="display-4">These are your enclosures</h2>
+
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn-primary" asp-controller="Enclosures" asp-action="Create">New Enclosure</a>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Climate</th>
+            <th>Habitat</th>
+            <th>SecurityLevel</th>
+            <th>Animals</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var enclosure in Model)
+        {
+            <tr>
+                <td>@enclosure.EnclosureId</td>
+                <td>@enclosure.Name</td>
+                <td>@enclosure.Size</td>
+                <td>@enclosure.Climate</td>
+                <td>@enclosure.Habitat</td>
+                <td>@enclosure.SecurityLevel</td>
+                <td>@enclosure.Animals</td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-primary btn-sm" asp-controller="Enclosures" asp-action="Edit"
+                    asp-route-id="@enclosure.EnclosureId">Edit</a>
+                    <a class="btn btn-primary btn-sm" asp-controller="Enclosures" asp-action="Edit"
+                    asp-route-id="@enclosure.EnclosureId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
