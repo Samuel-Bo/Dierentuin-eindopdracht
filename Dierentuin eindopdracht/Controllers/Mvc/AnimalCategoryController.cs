@@ -1,4 +1,5 @@
-﻿using Dierentuin_eindopdracht.Services;
+﻿using Dierentuin_eindopdracht.Models;
+using Dierentuin_eindopdracht.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dierentuin_eindopdracht.Controllers.Mvc
@@ -14,6 +15,13 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         {
             var categories = categoryService.GetCategories();
             return View(categories);
+        }
+
+        [HttpGet("api/categories")]
+        public IActionResult Get()
+        {
+            var categories = categoryService.GetCategories();
+            return Ok(categories);
         }
     }
 }

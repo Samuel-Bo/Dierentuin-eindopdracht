@@ -17,5 +17,12 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             var enclosures = enclosureService.GetEnclosures();
             return View(enclosures);
         }
+
+        [HttpGet("api/enclosures")]
+        public IActionResult Get()
+        {
+            var enclosures = enclosureService.GetEnclosures();
+            return Ok(enclosures);
+        }
     }
 }
