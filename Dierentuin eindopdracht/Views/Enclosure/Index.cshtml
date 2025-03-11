@@ -2,18 +2,20 @@
 @{
 }
 
-<h2 class="display-4">These are your enclosures</h2>
+<h2 style="text-align: center;" class="display-4">These are your enclosures</h2>
+
+<div style="height: 50px;"></div>
 
 <div class="row mb-5">
     <div class="col">
-        <a class="btn-primary" asp-controller="Enclosures" asp-action="Create">New Enclosure</a>
+        <a class="btn-primary" asp-controller="Enclosure" asp-action="Create">New Enclosure</a>
     </div>
     <div class="col">
 
     </div>
 </div>
 
-<table class="table">
+<table class="table"> <!--Enclosure index-->
     <thead>
         <tr>
             <th>ID</th>
@@ -38,9 +40,9 @@
                 <td>@enclosure.SecurityLevel</td>
                 <td>@enclosure.Animals</td>
                 <td style="white-space:nowrap">
-                    <a class="btn btn-primary btn-sm" asp-controller="Enclosures" asp-action="Edit"
+                    <a class="btn btn-primary btn-sm" asp-controller="Enclosure" asp-action="Edit"
                     asp-route-id="@enclosure.EnclosureId">Edit</a>
-                    <a class="btn btn-primary btn-sm" asp-controller="Enclosures" asp-action="Edit"
+                    <a class="btn btn-primary btn-sm" asp-controller="Enclosure" asp-action="Edit"
                     asp-route-id="@enclosure.EnclosureId">Delete</a>
                 </td>
             </tr>

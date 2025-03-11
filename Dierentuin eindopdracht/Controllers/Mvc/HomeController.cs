@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace Dierentuin_eindopdracht.Controllers
+namespace Dierentuin_eindopdracht.Controllers.Mvc
 {
     public class HomeController : Controller
     {

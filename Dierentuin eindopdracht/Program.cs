@@ -1,5 +1,6 @@
 using Bogus;
 using Dierentuin_eindopdracht.Models;
+using Dierentuin_eindopdracht.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dierentuin_eindopdracht
@@ -13,6 +14,13 @@ namespace Dierentuin_eindopdracht
             builder.Services.AddDbContext<ZooDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ZooDBconnection"))
             );
+
+            //Scoped because the services have to track changes from the database, if it were singleton it would share the same unedited db leading to stale requests.
+            builder.Services.AddScoped<EnclosureService>(); 
+
+            builder.Services.AddScoped<AnimalService>();
+
+            builder.Services.AddScoped<AnimalCategoryService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

@@ -1,0 +1,43 @@
+﻿@model List<AnimalCategory>
+@{
+}
+
+<h2 style="text-align: center;" class="display-4">These are your categories</h2>
+
+<div style="height: 50px;"></div>
+
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn-primary" asp-controller="AnimalCategory" asp-action="Create">New Category</a>
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+<table class="table">
+    <!--Enclosure index-->
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Animals</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.AnimalCategoryId</td>
+                <td>@category.Name</td>
+                <td>@category.Animals</td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-primary btn-sm" asp-controller="AnimalCategory" asp-action="Edit"
+                       asp-route-id="@category.AnimalCategoryId">Edit</a>
+                    <a class="btn btn-primary btn-sm" asp-controller="AnimalCategory" asp-action="Edit"
+                       asp-route-id="@category.AnimalCategoryId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
