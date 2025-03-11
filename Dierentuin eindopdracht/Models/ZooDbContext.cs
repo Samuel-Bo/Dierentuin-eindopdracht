@@ -21,42 +21,50 @@ namespace Dierentuin_eindopdracht.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //enter seeding values here
+            // Prevents cascade deletes
+            modelBuilder.Entity<Animal>()
+                .HasOne(a => a.Enclosure)
+                .WithMany(e => e.Animals)
+                .HasForeignKey(a => a.EnclosureId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Animal>()
+                .HasOne(a => a.Category)
+                .WithMany(c => c.Animals)
+                .HasForeignKey(a => a.AnimalCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Seed data
             int animalAmount = 30;
             int enclosureAmount = 6;
             int categoryAmount = 7;
             int ZooAmount = 1;
 
-            //prevents cascade deletes, animals still exist when a category or enclosure is deleted.
-            modelBuilder.Entity<Animal>()
-            .HasOne(a => a.Enclosure)
-            .WithMany(e => e.Animals)
-            .HasForeignKey(a => a.EnclosureId)
-            .OnDelete(DeleteBehavior.NoAction);
+            // Seed Enclosures
+            var enclosures = GetEnclosures(enclosureAmount);
+            modelBuilder.Entity<Enclosure>().HasData(enclosures);
 
-            modelBuilder.Entity<Animal>()
-            .HasOne(a => a.Category)
-            .WithMany(c => c.Animals)
-            .HasForeignKey(a => a.AnimalCategoryId)
-            .OnDelete(DeleteBehavior.NoAction);
+            // Seed Animal Categories
+            var categories = GetAnimalCategories(categoryAmount);
+            modelBuilder.Entity<AnimalCategory>().HasData(categories);
 
-            modelBuilder.Entity<Animal>().HasData(GetAnimals(animalAmount, enclosureAmount, categoryAmount));
-            modelBuilder.Entity<Enclosure>().HasData(GetEnclosures(enclosureAmount));
-            modelBuilder.Entity<AnimalCategory>().HasData(GetAnimalCategories(categoryAmount));
-            modelBuilder.Entity<Zoo>().HasData(GetZoos(ZooAmount));
+            // Seed Zoos
+            var zoos = GetZoos(ZooAmount);
+            modelBuilder.Entity<Zoo>().HasData(zoos);
 
+            // Seed Animals with references to seeded Enclosures and Categories
+            var animals = GetAnimals(animalAmount, enclosures, categories);
+            modelBuilder.Entity<Animal>().HasData(animals);
         }
 
-        private static List<Animal> GetAnimals(int amount, int enclosures, int categories)
+        private static List<Animal> GetAnimals(int amount, List<Enclosure> enclosures, List<AnimalCategory> categories)
         {
             string[] speciesNames = { "Lion", "Tiger", "Elephant", "Giraffe", "Penguin", "Crocodile", "Zebra", "Wolf", "Eagle", "Shark" };
             string[] foods = { "Appel", "Banaan", "Broccoli", "Kip", "Zalm", "Pasta", "Rijst", "Tomaat", "Melk", "Ei" };
 
-            var Id = 1;
-
             var animalFaker = new Faker<Animal>()
                 .UseSeed(1234)
-                .RuleFor(x => x.AnimalId, f => Id++)
+                .RuleFor(x => x.AnimalId, f => f.IndexFaker + 1) // Sequential Animal Ids
                 .RuleFor(x => x.Name, f => f.Name.FirstName())
                 .RuleFor(x => x.Species, f => f.PickRandom(speciesNames))
                 .RuleFor(x => x.Prey, f => f.PickRandom(speciesNames))
@@ -68,9 +76,9 @@ namespace Dierentuin_eindopdracht.Models
                 .RuleFor(x => x.DietaryClass, f => f.PickRandom(Enum.GetValues<ZooEnums.DietaryClass>()))
                 .RuleFor(x => x.ActivityPattern, f => f.PickRandom(Enum.GetValues<ZooEnums.ActivityPattern>()))
                 .RuleFor(x => x.SecurityRequirement, f => f.PickRandom(Enum.GetValues<ZooEnums.SecurityLevel>()))
-                .RuleFor(x => x.ZooId, f => 1)
-                .RuleFor(x => x.EnclosureId, f => f.Random.Int(1, enclosures)) //based on the amount of enclosures gives a random value between 1 and amount
-                .RuleFor(x => x.AnimalCategoryId, f => f.Random.Int(1, categories)) //based on the amount of categories gives a random value between 1 and amount
+                .RuleFor(x => x.ZooId, f => 1) // Assuming single zoo
+                .RuleFor(x => x.EnclosureId, f => f.PickRandom(enclosures).EnclosureId) // Pick a random enclosure from the seed
+                .RuleFor(x => x.AnimalCategoryId, f => f.PickRandom(categories).AnimalCategoryId) // Pick a random category from the seed
                 .Generate(amount);
 
             return animalFaker;
@@ -78,17 +86,15 @@ namespace Dierentuin_eindopdracht.Models
 
         private static List<Enclosure> GetEnclosures(int amount)
         {
-            var Id = 1;
             var enclosureFaker = new Faker<Enclosure>()
                 .UseSeed(1234)
-                .RuleFor(x => x.EnclosureId, f => Id++)
+                .RuleFor(x => x.EnclosureId, f => f.IndexFaker + 1) // Sequential Enclosure Ids
                 .RuleFor(x => x.Name, f => f.Name.FirstName())
                 .RuleFor(x => x.Size, f => f.Random.Double(10, 500))
                 .RuleFor(x => x.Climate, f => f.PickRandom(Enum.GetValues<ZooEnums.Climate>()))
                 .RuleFor(x => x.Habitat, f => f.PickRandom(Enum.GetValues<ZooEnums.HabitatType>()))
                 .RuleFor(x => x.SecurityLevel, f => f.PickRandom(Enum.GetValues<ZooEnums.SecurityLevel>()))
-                .RuleFor(x => x.Animals, f => new List<Animal>())
-                .RuleFor(x => x.ZooId, f => 1)
+                .RuleFor(x => x.ZooId, f => 1) // Assuming single zoo
                 .Generate(amount);
 
             return enclosureFaker;
@@ -98,10 +104,9 @@ namespace Dierentuin_eindopdracht.Models
         {
             string[] animalCategories = { "Mammals", "Reptiles", "Birds", "Amphibians", "Fish", "Insects", "Arachnids" };
 
-            var Id = 1;
             var animalCategoryFaker = new Faker<AnimalCategory>()
                 .UseSeed(1234)
-                .RuleFor(x => x.AnimalCategoryId, f => Id++)
+                .RuleFor(x => x.AnimalCategoryId, f => f.IndexFaker + 1) // Sequential Category Ids
                 .RuleFor(x => x.Name, f => f.PickRandom(animalCategories))
                 .Generate(amount);
 
@@ -110,16 +115,15 @@ namespace Dierentuin_eindopdracht.Models
 
         private static List<Zoo> GetZoos(int amount)
         {
-            var Id = 1;
             var zooFaker = new Faker<Zoo>()
                 .UseSeed(1234)
-                .RuleFor(x => x.ZooId, f => Id++)
+                .RuleFor(x => x.ZooId, f => f.IndexFaker + 1) // Sequential Zoo Ids
                 .RuleFor(x => x.Name, f => f.Company.CompanyName())
-                .RuleFor(x => x.Animals, f => new List<Animal>())
-                .RuleFor(x => x.Enclosures, f => new List<Enclosure>())
                 .Generate(amount);
 
             return zooFaker;
         }
+
+
     }
 }
