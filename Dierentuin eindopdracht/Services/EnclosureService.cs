@@ -28,9 +28,16 @@ namespace Dierentuin_eindopdracht.Services
                 Climate = enclosureDto.Climate,
                 Habitat = enclosureDto.Habitat,
                 SecurityLevel = enclosureDto.SecurityLevel,
-                Animals = enclosureDto.Animals,
-                ZooId = 1
+                ZooId = 1,
             };
+
+            if (enclosureDto.SelectedAnimalIds != null && enclosureDto.SelectedAnimalIds.Any()) //if any id's are sent to the list in the dto the query will search the 
+            {                                                                                   //the animals where they belong to.
+                enclosure.Animals = context.Animals
+                .Where(a => enclosureDto.SelectedAnimalIds.Contains(a.AnimalId))
+                .ToList();
+            }
+         
 
             context.Enclosures.Add(enclosure);
             context.SaveChanges();

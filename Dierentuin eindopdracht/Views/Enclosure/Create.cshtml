@@ -70,7 +70,7 @@
                         @foreach (var animal in ViewBag.EmptyAnimals)
                         {
                             <div>
-                                <input type="checkbox" id="@animal.AnimalId" name="SelectedAnimals" value="@animal.AnimalId" />
+                                <input type="checkbox" id="@animal.AnimalId" name="SelectedAnimalIds" value="@animal.AnimalId" />
                                 <label for="@animal.AnimalId">@animal.Name</label>
                             </div>
                         }

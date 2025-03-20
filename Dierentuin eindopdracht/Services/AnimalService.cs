@@ -22,7 +22,7 @@ namespace Dierentuin_eindopdracht.Services
             return animals;
         }
 
-        public List<Animal> EmptyEnclosureGet()
+        public List<Animal> EmptyEnclosureGet() //returns the animals where the enclosre is null
         {
             var animals = context.Animals
                 .Where(a => a.EnclosureId == null)
@@ -30,6 +30,16 @@ namespace Dierentuin_eindopdracht.Services
 
             return animals;
         }
+
+        public List<Animal> EmptyCategoryGet()
+        {
+            var animals = context.Animals
+                .Where(a => a.AnimalCategoryId == null)
+                .ToList();
+
+            return animals;
+        }
+
         public void CreateAnimal(AnimalDto animalDto) //creating and adding a new enclosure to the database
         {
             var animal = new Animal

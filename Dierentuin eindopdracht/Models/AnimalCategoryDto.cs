@@ -6,6 +6,6 @@ namespace Dierentuin_eindopdracht.Models
     {
         [Required(ErrorMessage ="a category must contain a name")]
         public string Name { get; set; }
-        public ICollection<Animal> ?Animals { get; set; }
+        public ICollection<int> ?SelectedAnimalIds { get; set; }
     }
 }

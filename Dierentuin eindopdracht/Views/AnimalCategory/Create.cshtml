@@ -15,6 +15,22 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    @if (ViewBag.EmptyAnimals != null)
+                    {
+                        @foreach (var animal in ViewBag.EmptyAnimals)
+                        {
+                            <div>
+                                <input type="checkbox" id="@animal.AnimalId" name="SelectedAnimalIds" value="@animal.AnimalId" />
+                                <label for="@animal.AnimalId">@animal.Name</label>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
             <div class="row">
                 <div class="offset-sm-4 col-sm-4 d-grid">
                     <button type="submit" class="btn btn-primary">Create</button>

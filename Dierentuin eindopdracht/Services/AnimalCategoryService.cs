@@ -24,6 +24,13 @@ namespace Dierentuin_eindopdracht.Services
                 Name = categoryDto.Name,
             };
 
+            if (categoryDto.SelectedAnimalIds != null && categoryDto.SelectedAnimalIds.Any()) //if any id's are sent to the list in the dto the query will search the 
+            {                                                                                   //the animals where they belong to.
+                category.Animals = context.Animals
+                .Where(a => categoryDto.SelectedAnimalIds.Contains(a.AnimalId))
+                .ToList();
+            }
+
             context.AnimalCategories.Add(category);
             context.SaveChanges();
 

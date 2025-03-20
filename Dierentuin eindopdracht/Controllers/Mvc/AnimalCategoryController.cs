@@ -8,9 +8,11 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
     public class AnimalCategoryController : Controller
     {
         private readonly AnimalCategoryService categoryService;
-        public AnimalCategoryController(AnimalCategoryService _categoryService)
+        private readonly AnimalService animalService;
+        public AnimalCategoryController(AnimalCategoryService _categoryService, AnimalService _animalService)
         {
             categoryService = _categoryService;
+            animalService = _animalService;
         }
 
         [HttpGet("Index")]
@@ -30,6 +32,8 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         [HttpGet("Create")]
         public IActionResult Create()//Shows the creating view for categories, we need this to acces the create page 
         {
+            var animals = animalService.EmptyCategoryGet();
+            ViewBag.EmptyAnimals = animals;
             return View();
         }
 
