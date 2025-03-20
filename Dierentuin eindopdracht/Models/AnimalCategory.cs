@@ -6,6 +6,6 @@
         public string Name { get; set; }
 
         //navigation properties
-        public ICollection<Animal> Animals { get; set; } = new List<Animal>();
+        public ICollection<Animal> ?Animals { get; set; } = new List<Animal>();
     }
 }

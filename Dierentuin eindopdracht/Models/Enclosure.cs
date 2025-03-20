@@ -4,7 +4,6 @@ namespace Dierentuin_eindopdracht.Models
 {
     public class Enclosure
     {
-        [Required]
         public int EnclosureId { get; set; }
         public string Name { get; set; }
 
@@ -17,8 +16,9 @@ namespace Dierentuin_eindopdracht.Models
         public ZooEnums.SecurityLevel SecurityLevel { get; set; }
 
         //navigation properties
-        public ICollection<Animal> Animals { get; set; }
+        public ICollection<Animal> ?Animals { get; set; }
         public int ZooId { get; set; } //f-key
         public Zoo Zoo { get; set; }
     }
 }
+

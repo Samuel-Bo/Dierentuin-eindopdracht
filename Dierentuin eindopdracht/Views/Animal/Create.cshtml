@@ -1,0 +1,155 @@
+﻿@model AnimalDto
+@{
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto rounded border p-3">
+        <h2 class="text-center mb-5">New Animal</h2>
+
+        <form method="post">
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Species</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Species" />
+                    <span asp-validation-for="Species" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Prey</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Prey" />
+                    <span asp-validation-for="Prey" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">SpaceRequirement</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="SpaceRequirement" />
+                    <span asp-validation-for="SpaceRequirement" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">FeedingTime</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="FeedingTime" />
+                    <span asp-validation-for="FeedingTime" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Arise</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="time" asp-for="Arise" />
+                    <span asp-validation-for="Arise" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">BedTime</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="time" asp-for="BedTime" />
+                    <span asp-validation-for="BedTime" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Size</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="Size">
+                        @foreach (var climate in Enum.GetValues(typeof(ZooEnums.Size)))
+                        {
+                            <option value="@climate">@climate</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">DietaryClass</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="DietaryClass">
+                        @foreach (var habitat in Enum.GetValues(typeof(ZooEnums.DietaryClass)))
+                        {
+                            <option value="@habitat">@habitat</option>
+                        }
+                    </select>
+                    <span asp-validation-for="DietaryClass" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">ActivityPattern</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="ActivityPattern">
+                        @foreach (var security in Enum.GetValues(typeof(ZooEnums.ActivityPattern)))
+                        {
+                            <option value="@security">@security</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ActivityPattern" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">SecurityRequirement</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="SecurityRequirement">
+                        @foreach (var security in Enum.GetValues(typeof(ZooEnums.SecurityLevel)))
+                        {
+                            <option value="@security">@security</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SecurityRequirement" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Enclosure</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="EnclosureId">
+                        <option value="">No Enclosure</option>
+                        @foreach (var enclosure in ViewBag.Enclosures)
+                        {
+                            <option value="@enclosure.EnclosureId">@enclosure.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="AnimalCategoryId">
+                        <option value="">No category</option>
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.AnimalCategoryId">@category.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    <a class="btn btn-primary" asp-controller="Animal" asp-action="Index">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

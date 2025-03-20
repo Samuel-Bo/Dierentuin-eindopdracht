@@ -1,4 +1,5 @@
 ﻿using Dierentuin_eindopdracht.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dierentuin_eindopdracht.Services
@@ -19,6 +20,40 @@ namespace Dierentuin_eindopdracht.Services
             .ToList();
 
             return animals;
+        }
+
+        public List<Animal> EmptyEnclosureGet()
+        {
+            var animals = context.Animals
+                .Where(a => a.EnclosureId == null)
+                .ToList();
+
+            return animals;
+        }
+        public void CreateAnimal(AnimalDto animalDto) //creating and adding a new enclosure to the database
+        {
+            var animal = new Animal
+            {
+                Name = animalDto.Name,
+                Species = animalDto.Species,
+                Prey = animalDto.Prey,
+                SpaceRequirement = animalDto.SpaceRequirement,
+                FeedingTime = animalDto.FeedingTime,
+                Arise = animalDto.Arise,
+                BedTime = animalDto.BedTime,
+                Size = animalDto.Size,
+                DietaryClass = animalDto.DietaryClass,
+                ActivityPattern = animalDto.ActivityPattern,
+                SecurityRequirement = animalDto.SecurityRequirement,
+                EnclosureId = animalDto.EnclosureId,
+                AnimalCategoryId = animalDto.AnimalCategoryId,
+                ZooId = 1
+            };
+
+            context.Animals.Add(animal);
+            context.SaveChanges();
+
+            Console.WriteLine("Animal successfully saved to database!");
         }
     }
 }

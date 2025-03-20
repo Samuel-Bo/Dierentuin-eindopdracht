@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dierentuin_eindopdracht.Migrations
 {
     [DbContext(typeof(ZooDbContext))]
-    [Migration("20250309150807_KleineTest")]
-    partial class KleineTest
+    [Migration("20250318133557_addingAnimalsNullable")]
+    partial class addingAnimalsNullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

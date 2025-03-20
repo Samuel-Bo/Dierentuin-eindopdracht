@@ -5,7 +5,7 @@
 namespace Dierentuin_eindopdracht.Migrations
 {
     /// <inheritdoc />
-    public partial class betterDB : Migration
+    public partial class addingAnimalsNullable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

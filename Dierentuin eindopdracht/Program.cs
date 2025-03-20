@@ -23,7 +23,10 @@ namespace Dierentuin_eindopdracht
             builder.Services.AddScoped<AnimalCategoryService>();
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.MaxDepth = 100; // Increase the depth limit
+            }); 
 
             var app = builder.Build();
 
