@@ -25,6 +25,7 @@
             <th>Habitat</th>
             <th>SecurityLevel</th>
             <th>Animals</th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -45,8 +46,8 @@
                 <td style="white-space:nowrap">
                     <a class="btn btn-primary btn-sm" asp-controller="Enclosure" asp-action="Edit"
                     asp-route-id="@enclosure.EnclosureId">Edit</a>
-                    <a class="btn btn-primary btn-sm" asp-controller="Enclosure" asp-action="Edit"
-                    asp-route-id="@enclosure.EnclosureId">Delete</a>
+                    <a class="btn btn-danger btn-sm" asp-controller="Enclosure" asp-action="Delete"
+                    asp-route-id="@enclosure.EnclosureId" onclick="return confirm('Are you Sure?')">Delete</a>
                 </td>
             </tr>
         }

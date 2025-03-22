@@ -4,6 +4,10 @@
 
 <h2 style="text-align: center;"class="display-4">These are your animals</h2>
 
+<br />
+
+<p style="text-align: center;">You can scroll left and right because there are a ton of properties</p>
+
 <div style="height: 50px;"></div> 
 
 <div class="row mb-5">
@@ -32,6 +36,7 @@
                 <th>SecurityRequirement</th> 
                 <th>Enclosure</th>
                 <th>Category</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -56,7 +61,7 @@
                     <td style="white-space:nowrap">
                         <a class="btn btn-primary btn-sm" asp-controller="Animal" asp-action="Edit"
                            asp-route-id="@animal.AnimalId">Edit</a>
-                        <a class="btn btn-primary btn-sm" asp-controller="Animal" asp-action="Edit"
+                        <a class="btn btn-danger btn-sm" asp-controller="Animal" asp-action="Delete"
                            asp-route-id="@animal.AnimalId">Delete</a>
                     </td>
                 </tr>

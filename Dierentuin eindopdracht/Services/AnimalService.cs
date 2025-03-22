@@ -1,6 +1,8 @@
-﻿using Dierentuin_eindopdracht.Models;
+﻿using Bogus.DataSets;
+using Dierentuin_eindopdracht.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Dierentuin_eindopdracht.Models.ZooEnums;
 
 namespace Dierentuin_eindopdracht.Services
 {
@@ -11,6 +13,14 @@ namespace Dierentuin_eindopdracht.Services
         {
             this.context = context;
         }
+        public Animal FindAnimal(int id)
+        {
+
+            var animal = context.Animals.Find(id);
+
+            return animal;
+
+        }
         public List<Animal> GetAnimals() //list for animal index
         {
             var animals = context.Animals
@@ -18,6 +28,23 @@ namespace Dierentuin_eindopdracht.Services
             .Include(a => a.Category)   // Include Categories
             .OrderByDescending(a => a.AnimalId)  //Descending to see new animals at the top
             .ToList();
+
+            return animals;
+        }
+        public List<Animal> EnclosureGet(int id) //returns the animals of an enclosure
+        {
+            var animals = context.Animals.
+                Where(a => a.EnclosureId == id)
+                .ToList();
+
+            return animals;
+        }
+
+        public List<Animal> CategoryGet(int id) //returns the animals of an enclosure
+        {
+            var animals = context.Animals.
+                Where(a => a.AnimalCategoryId == id)
+                .ToList();
 
             return animals;
         }
@@ -64,6 +91,66 @@ namespace Dierentuin_eindopdracht.Services
             context.SaveChanges();
 
             Console.WriteLine("Animal successfully saved to database!");
+        }
+        public AnimalDto ShowAnimal(int id) //shows the animal that you're trying to edit
+        {
+            var animal = FindAnimal(id);
+
+            var animalDto = new AnimalDto
+            {
+                Name = animal.Name,
+                Species = animal.Species,
+                Prey = animal.Prey,
+                SpaceRequirement = animal.SpaceRequirement,
+                FeedingTime = animal.FeedingTime,
+                Arise = animal.Arise,
+                BedTime = animal.BedTime,
+                Size = animal.Size,
+                DietaryClass = animal.DietaryClass,
+                ActivityPattern = animal.ActivityPattern,
+                SecurityRequirement = animal.SecurityRequirement,
+                EnclosureId = animal.EnclosureId,
+                AnimalCategoryId = animal.AnimalCategoryId,
+            };
+
+            return animalDto;
+        }
+        public void EditAnimal(int id, AnimalDto animalDto) //Actually edits animals
+        {
+            var animal = FindAnimal(id);
+
+            animal.Name = animalDto.Name;
+            animal.Species = animalDto.Species;
+            animal.Prey = animalDto.Prey;
+            animal.SpaceRequirement = animalDto.SpaceRequirement;
+            animal.FeedingTime = animalDto.FeedingTime;
+            animal.Arise = animalDto.Arise;
+            animal.BedTime = animalDto.BedTime;
+            animal.Size = animalDto.Size;
+            animal.DietaryClass = animalDto.DietaryClass;
+            animal.ActivityPattern = animalDto.ActivityPattern;
+            animal.SecurityRequirement = animalDto.SecurityRequirement;
+            animal.EnclosureId = animalDto.EnclosureId;
+            animal.AnimalCategoryId = animalDto.AnimalCategoryId;
+            animal.ZooId = 1;
+
+            Console.WriteLine("DEBUG: Saving changes to database...");
+            context.SaveChanges();
+            Console.WriteLine("DEBUG: Changes saved successfully!");
+        }
+        public void DeleteAnimal(int id) //deleting animals
+        {
+            var animal = context.Animals.Find(id);
+
+            if (animal == null)
+            {
+                Console.WriteLine("animal not found");
+            }
+
+            context.Animals.Remove(animal);
+            Console.WriteLine("animal removed");
+            context.SaveChanges();
+            Console.WriteLine("changes saved");
         }
     }
 }

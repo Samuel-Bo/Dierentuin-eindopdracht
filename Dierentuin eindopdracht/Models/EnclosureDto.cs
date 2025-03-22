@@ -22,6 +22,8 @@ namespace Dierentuin_eindopdracht.Models
 
         [Required(ErrorMessage = "an enclosure needs a SecurityLevel")]
         public ZooEnums.SecurityLevel SecurityLevel { get; set; }
-        public ICollection<int> ?SelectedAnimalIds { get; set; }
+        public ICollection<int> ?SelectedAnimalIds { get; set; } //for adding animals
+        public ICollection<int> ?DeleteAnimalIds { get; set; } //for deleting animals
+        public ICollection<Animal> ?Animals { get; set; }
     }
 }

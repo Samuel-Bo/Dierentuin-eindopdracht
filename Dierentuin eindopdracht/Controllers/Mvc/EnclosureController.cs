@@ -2,6 +2,7 @@
 using Dierentuin_eindopdracht.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Dierentuin_eindopdracht.Controllers.Mvc
 {
@@ -38,7 +39,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         public IActionResult Create()//Shows the creating view for enclosures, we need this to acces the create page 
         {
             var animals = animalService.EmptyEnclosureGet();
-            ViewBag.EmptyAnimals = animals;  //need this for easier display in form
+            ViewBag.EmptyAnimals = animals;  //need this for easier display in html form
             return View();
         }
 
@@ -47,12 +48,67 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         {
             if (!ModelState.IsValid)
             {
+                var animals = animalService.EmptyEnclosureGet();
+                ViewBag.EmptyAnimals = animals; 
+
                 return View(enclosureDto); //we need this to help catch the savechanges error and return us to the creation page
             }
 
             enclosureService.CreateEnclosure(enclosureDto);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet("Edit")]
+        public IActionResult Edit(int id)//shows us the enclosure data when you edit the enclosure
+        {
+            var enclosureDto = enclosureService.ShowEnclosure(id);
+
+            var animals = animalService.EnclosureGet(id); //returns animals in enclosure
+            ViewBag.EnclosureAnimals = animals;
+
+            var emptyAnimals = animalService.EmptyEnclosureGet(); //Returns animals where enclosure null
+            ViewBag.EmptyAnimals = emptyAnimals;
+
+            ViewData["EnclosureId"] = id;
+
+            return View(enclosureDto); 
+        }
+
+        [HttpPost("Edit")]
+        public IActionResult Edit(int id, EnclosureDto enclosureDto)//actually edits the enclosure
+        {
+            var enclosure = enclosureService.FindEnclosure(id);
+
+            if (enclosure == null)
+            {
+                return RedirectToAction("Index", "Enclosure");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["EnclosureId"] = id;
+
+                var animals = animalService.EnclosureGet(id);
+                ViewBag.EnclosureAnimals = animals;
+
+                var emptyAnimals = animalService.EmptyEnclosureGet();
+                ViewBag.EmptyAnimals = emptyAnimals;
+
+                return View(enclosureDto);
+            }
+
+            enclosureService.EditEnclosure(id, enclosureDto);
+
+            return RedirectToAction("Index", "Enclosure");
+        }
+
+        [HttpGet] //deleting Enclosures
+        public IActionResult Delete(int id)
+        {
+            enclosureService.DeleteEnclosure(id);
+
+            return RedirectToAction("Index", "Enclosure");
         }
 
         //!!---API EXCLUSIVE---!!

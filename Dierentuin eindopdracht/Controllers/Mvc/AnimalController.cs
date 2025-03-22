@@ -40,6 +40,12 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         {
             if (!ModelState.IsValid)
             {
+                var enclosures = enclosureService.GetEnclosures(); // we are required to refill the dropdowns everytime we get an invalid errors otherwise the they will return null
+                ViewBag.Enclosures = enclosures;  
+
+                var categories = categoryService.GetCategories();
+                ViewBag.Categories = categories;  
+
                 return View(animalDto); //we need this to help catch the savechanges error and return us to the creation page
             }
 
@@ -48,6 +54,57 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index");
         }
 
+        [HttpGet("Edit")]
+        public IActionResult Edit(int id)//shows us the animal data when you edit the animal
+        {
+            var animalDto = animalService.ShowAnimal(id);
+
+            var enclosures = enclosureService.GetEnclosures();
+            ViewBag.Enclosures = enclosures;  //need this for easier display in form
+
+            var categories = categoryService.GetCategories();
+            ViewBag.Categories = categories;  //need this for easier display in form
+
+            ViewData["AnimalId"] = id;
+
+            return View(animalDto);
+        }
+
+        [HttpPost("Edit")]
+        public IActionResult Edit(int id, AnimalDto animalDto)//actually edits the animal
+        {
+            var animal = animalService.FindAnimal(id);
+
+            if (animal == null)
+            {
+                return RedirectToAction("Index", "Animal");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["AnimalId"] = id;
+
+                var enclosures = enclosureService.GetEnclosures(); // we are required to refill the dropdowns everytime we get an invalid errors otherwise the they will return null
+                ViewBag.Enclosures = enclosures;
+
+                var categories = categoryService.GetCategories();
+                ViewBag.Categories = categories;
+
+                return View(animalDto);
+            }
+
+            animalService.EditAnimal(id, animalDto);
+
+            return RedirectToAction("Index", "Animal");
+        }
+
+        [HttpGet] //deleting animals
+        public IActionResult Delete(int id)
+        {
+            animalService.DeleteAnimal(id);
+
+            return RedirectToAction("Index", "Animal");
+        }
 
         //---API EXCLUSIVE!!!---
 

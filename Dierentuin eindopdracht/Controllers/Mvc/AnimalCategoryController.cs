@@ -32,7 +32,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         [HttpGet("Create")]
         public IActionResult Create()//Shows the creating view for categories, we need this to acces the create page 
         {
-            var animals = animalService.EmptyCategoryGet();
+            var animals = animalService.EmptyCategoryGet();//need this for efficiency
             ViewBag.EmptyAnimals = animals;
             return View();
         }
@@ -42,12 +42,67 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         {
             if (!ModelState.IsValid)
             {
+                var animals = animalService.EmptyCategoryGet();
+                ViewBag.EmptyAnimals = animals;
+
                 return View(categoryDto); //we need this to help catch the savechanges error and return us to the creation page
             }
 
             categoryService.CreateCategory(categoryDto);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet("Edit")]
+        public IActionResult Edit(int id)//shows us the enclosure data when you edit the enclosure
+        {
+            var categoryDto = categoryService.ShowCategory(id);
+
+            var animals = animalService.CategoryGet(id); //returns animals from the category
+            ViewBag.CategoryAnimals = animals;
+
+            var emptyAnimals = animalService.EmptyCategoryGet(); //returns animals where category is null
+            ViewBag.EmptyAnimals = emptyAnimals;
+
+            ViewData["CategoryId"] = id;
+
+            return View(categoryDto);
+        }
+
+        [HttpPost("Edit")]
+        public IActionResult Edit(int id, AnimalCategoryDto categoryDto)//actually edits the enclosure
+        {
+            var category = categoryService.FindCategory(id);
+
+            if (category == null)
+            {
+                return RedirectToAction("Index", "AnimalCategory");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["CategoryId"] = id;
+
+                var animals = animalService.CategoryGet(id);
+                ViewBag.CategoryAnimals = animals;
+
+                var emptyAnimals = animalService.EmptyCategoryGet(); 
+                ViewBag.EmptyAnimals = emptyAnimals;
+
+                return View(categoryDto);
+            }
+
+            categoryService.EditCategory(id, categoryDto);
+
+            return RedirectToAction("Index", "AnimalCategory");
+        }
+
+        [HttpGet] 
+        public IActionResult Delete(int id) //deleting animals
+        {
+            categoryService.DeleteCategory(id);
+
+            return RedirectToAction("Index", "AnimalCategory");
         }
 
         //!!---API EXCLUSIVE---!!

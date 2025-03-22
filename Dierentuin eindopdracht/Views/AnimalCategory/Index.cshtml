@@ -21,6 +21,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Animals</th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -37,8 +38,8 @@
                 <td style="white-space:nowrap">
                     <a class="btn btn-primary btn-sm" asp-controller="AnimalCategory" asp-action="Edit"
                        asp-route-id="@category.AnimalCategoryId">Edit</a>
-                    <a class="btn btn-primary btn-sm" asp-controller="AnimalCategory" asp-action="Edit"
-                       asp-route-id="@category.AnimalCategoryId">Delete</a>
+                    <a class="btn btn-danger btn-sm" asp-controller="AnimalCategory" asp-action="Delete"
+                       asp-route-id="@category.AnimalCategoryId" onclick="return confirm('Are you Sure?')">Delete</a>
                 </td>
             </tr>
         }
