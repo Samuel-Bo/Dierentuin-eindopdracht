@@ -2,11 +2,19 @@
 @{
 }
 
+<style>
+    th{
+        cursor:pointer;
+    }
+</style>
+
 <h2 style="text-align: center;"class="display-4">These are your animals</h2>
 
 <br />
 
 <p style="text-align: center;">You can scroll left and right because there are a ton of properties</p>
+
+
 
 <div style="height: 50px;"></div> 
 
@@ -19,7 +27,7 @@
 </div>
 
 <div style="overflow-x: auto; max-width: 100%;"> <!--Animal index-->
-    <table class="table">
+    <table id="animals" class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -68,5 +76,17 @@
             }
         </tbody>
     </table>
+
+    <script>
+        const headers = document.querySelectorAll('#animals th');
+
+        headers.forEach((header)=>{
+            header.addEventListener('click',()=>{
+                const headerName = header.textContent || header.innerText;
+                alert('it works '+headerName);
+            });
+        });
+    </script>
+
 </div>
 
