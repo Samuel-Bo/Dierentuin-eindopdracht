@@ -1,0 +1,55 @@
+﻿@model List<Animal>
+
+<div style="overflow-x: auto; max-width: 100%;">
+    <!--Animal index-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Species</th>
+                <th>Prey</th>
+                <th>SpaceRequirement</th>
+                <th>Feedingtime</th>
+                <th>Arise</th>
+                <th>Bedtime</th>
+                <th>Size</th>
+                <th>DietaryClass</th>
+                <th>ActivityPattern</th>
+                <th>SecurityRequirement</th>
+                <th>Enclosure</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var animal in Model)
+            {
+                <tr>
+                    <td>@animal.AnimalId</td>
+                    <td>@animal.Name</td>
+                    <td>@animal.Species</td>
+                    <td>@animal.Prey</td>
+                    <td>@animal.SpaceRequirement</td>
+                    <td>@animal.FeedingTime</td>
+                    <td>@animal.Arise</td>
+                    <td>@animal.BedTime</td>
+                    <td>@animal.Size</td>
+                    <td>@animal.DietaryClass</td>
+                    <td>@animal.ActivityPattern</td>
+                    <td>@animal.SecurityRequirement</td>
+                    <td>@(animal.Enclosure?.Name ?? "No Enclosure")</td> <!--Won't try to acces if the enclosure == null and displays string if null-->
+                    <td>@(animal.Category?.Name ?? "No Category")</td> <!--Won't try to acces if the category == null and displays string if null-->
+                    <td style="white-space:nowrap">
+                        <a class="btn btn-primary btn-sm" asp-controller="Animal" asp-action="Edit"
+                           asp-route-id="@animal.AnimalId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Animal" asp-action="Delete"
+                           asp-route-id="@animal.AnimalId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

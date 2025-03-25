@@ -146,5 +146,36 @@ namespace Dierentuin_eindopdracht.Services
             Console.WriteLine("changes saved");
         }
 
+        public List<Animal> GetSunsetAnimals(int id)
+        {
+            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+
+            var animals = context.Animals
+                .Where(a => a.EnclosureId == id)
+                .ToList();
+
+            var sleepyAnimals = animals
+                .Where(a => (a.BedTime < a.Arise && currentTime >= a.BedTime && currentTime < a.Arise) // for when animals sleep throught the day
+                 || (a.BedTime > a.Arise && (currentTime >= a.BedTime || currentTime < a.Arise))) // for when animals sleep in the night
+                .ToList();
+
+            return sleepyAnimals;
+        }
+
+        public List<Animal> GetSunriseAnimals(int id)
+        {
+            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+
+            var animals = context.Animals
+                .Where(a => a.EnclosureId == id)
+                .ToList();
+
+            var wakeyAnimals = animals
+                .Where(a => (a.BedTime > a.Arise && currentTime <= a.BedTime && currentTime > a.Arise) // for when animals sleep throught the day
+                         || (a.BedTime < a.Arise && (currentTime <= a.BedTime || currentTime > a.Arise))) // for when animals sleep in the night
+                .ToList();
+
+            return wakeyAnimals;
+        }
     }
 }

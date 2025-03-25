@@ -111,6 +111,22 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index", "Enclosure");
         }
 
+        [HttpGet("Sunset/{enclosureId}")]
+        public IActionResult Sunset(int enclosureId)
+        {
+            var animals = enclosureService.GetSunsetAnimals(enclosureId);
+
+            return PartialView("Sunset", animals);
+        }
+
+        [HttpGet("Sunrise/{enclosureId}")]
+        public IActionResult Sunrise(int enclosureId)
+        {
+            var animals = enclosureService.GetSunriseAnimals(enclosureId);
+
+            return PartialView("Sunrise", animals);
+        }
+
         //!!---API EXCLUSIVE---!!
 
         [HttpGet("api/enclosures")] //api display of enclosures

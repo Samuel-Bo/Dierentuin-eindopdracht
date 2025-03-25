@@ -3,8 +3,20 @@
 }
 
 <style>
+<<<<<<< Updated upstream
     th{
         cursor:pointer;
+    }
+
+    .modal-content {
+        max-height: 80vh; 
+        overflow: auto; /* clips content and adds a scrollbar for it */
+    }
+
+    .modal-body {
+        max-height: 60vh; 
+        overflow-y: auto; /* clips content and adds a scrollbar for it */
+>>>>>>> Stashed changes
     }
 </style>
 
@@ -21,6 +33,12 @@
 <div class="row mb-5">
     <div class="col">
         <a class="btn btn-primary" asp-controller="Animal" asp-action="Create">New Animal</a>
+
+        <!-- Knop om de modal te openen -->
+        <button class="btn btn-dark" id="showSunsetModal" onclick="ShowSunsetModal()">Sunset🌙</button>
+
+        <!-- Knop om de modal te openen -->
+        <button class="btn btn-warning" id="showSunriseModal" onclick="ShowSunriseModal()">Sunrise☀️</button>
     </div>
     <div class="col">
     </div>
@@ -89,4 +107,67 @@
     </script>
 
 </div>
+
+<!-- Sunset Modal, the styling of the modal and the ids we need to connect to elements and functions-->
+<div class="modal fade" id="sunsetModal" tabindex="-1" aria-labelledby="sunsetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sunsetModalLabel">Deze dieren zijn aan het slapen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sunsetAnimalsContainer"> <!--this is where the body of the modal is displayed-->
+                    <p>Laden...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sunrise Modal, the styling of the modal and the ids we need to connect to elements and functions-->
+<div class="modal fade" id="sunriseModal" tabindex="-1" aria-labelledby="sunriseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sunsetModalLabel">Deze dieren zijn wakker</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sunriseAnimalsContainer">
+                    <!--this is where the body of the modal is displayed-->
+                    <p>Laden...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        function ShowSunsetModal() {
+            $.ajax({
+                url: "/Animal/Sunset", //at this Url the data gets requested
+                type: "GET",           //This is the restful request that's being used so in this case it Gets data
+                success: function (data) {
+                    $("#sunsetAnimalsContainer").html(data); //here the data at a succes of the request gets parsed to an object with the id sunsetAnimalsContainer
+                    $("#sunsetModal").modal("show");
+                }
+            });
+        }
+        function ShowSunriseModal() {
+            $.ajax({
+                url: "/Animal/Sunrise", //at this Url the data gets requested
+                type: "GET",           //This is the restful request that's being used so in this case it Gets data
+                success: function (data) {
+                    $("#sunriseAnimalsContainer").html(data); //here the data at a succes of the request gets parsed to an object with the id sunsetAnimalsContainer
+                    $("#sunriseModal").modal("show");
+                }
+            });
+        }
+    </script>
+}
+
+
 
