@@ -3,20 +3,18 @@
 }
 
 <style>
-<<<<<<< Updated upstream
-    th{
-        cursor:pointer;
+    th {
+        cursor: pointer;
     }
 
     .modal-content {
-        max-height: 80vh; 
+        max-height: 80vh;
         overflow: auto; /* clips content and adds a scrollbar for it */
     }
 
     .modal-body {
-        max-height: 60vh; 
+        max-height: 60vh;
         overflow-y: auto; /* clips content and adds a scrollbar for it */
->>>>>>> Stashed changes
     }
 </style>
 
@@ -94,18 +92,6 @@
             }
         </tbody>
     </table>
-
-    <script>
-        const headers = document.querySelectorAll('#animals th');
-
-        headers.forEach((header)=>{
-            header.addEventListener('click',()=>{
-                const headerName = header.textContent || header.innerText;
-                alert('it works '+headerName);
-            });
-        });
-    </script>
-
 </div>
 
 <!-- Sunset Modal, the styling of the modal and the ids we need to connect to elements and functions-->
@@ -166,6 +152,15 @@
                 }
             });
         }
+
+        const headers = document.querySelectorAll('#animals th');
+
+        headers.forEach((header)=>{
+            header.addEventListener('click',()=>{
+                const headerName = header.textContent || header.innerText;
+                alert('it works '+headerName);
+            });
+        });
     </script>
 }
 
