@@ -10,7 +10,7 @@ namespace Dierentuin_eindopdracht.Models
         [Required(ErrorMessage = "every animal has a species")]
         public string Species { get; set; }
 
-        public string Prey { get; set; }
+        public string ?Prey { get; set; }
 
         [Required(ErrorMessage = "every animal has a SpaceRequirement")]
         public double SpaceRequirement { get; set; }

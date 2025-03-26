@@ -12,7 +12,7 @@ namespace Dierentuin_eindopdracht.Models
 
         public string Species { get; set; }
 
-        public string Prey { get; set; }
+        public string ?Prey { get; set; }
 
         public double SpaceRequirement { get; set; }
         public string FeedingTime { get; set; }

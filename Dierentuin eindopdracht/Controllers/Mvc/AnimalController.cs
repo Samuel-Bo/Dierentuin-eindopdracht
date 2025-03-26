@@ -151,6 +151,14 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return PartialView(animals);
         }
 
+        [HttpPost] 
+        public IActionResult AutoAssign() //AutoAssign action 
+        {
+            animalService.AssignRandomEnclosures();
+
+            return RedirectToAction("Index");
+        }
+
         //---API EXCLUSIVE!!!---
 
         [HttpGet("api/animals")]

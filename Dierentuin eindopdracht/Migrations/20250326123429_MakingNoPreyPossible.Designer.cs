@@ -4,6 +4,7 @@ using Dierentuin_eindopdracht.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dierentuin_eindopdracht.Migrations
 {
     [DbContext(typeof(ZooDbContext))]
-    partial class ZooDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250326123429_MakingNoPreyPossible")]
+    partial class MakingNoPreyPossible
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,9 +59,6 @@ namespace Dierentuin_eindopdracht.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Prey")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SecurityRequirement")
                         .HasColumnType("int");
 
@@ -97,7 +97,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 6,
                             FeedingTime = "Kip",
                             Name = "Grayson",
-                            Prey = "Giraffe",
                             SecurityRequirement = 2,
                             Size = 4,
                             SpaceRequirement = 473.9013915992814,
@@ -115,7 +114,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 4,
                             FeedingTime = "Appel",
                             Name = "Jamal",
-                            Prey = "Zebra",
                             SecurityRequirement = 1,
                             Size = 5,
                             SpaceRequirement = 296.87672797910722,
@@ -133,7 +131,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 3,
                             FeedingTime = "Tomaat",
                             Name = "Shawna",
-                            Prey = "Giraffe",
                             SecurityRequirement = 1,
                             Size = 6,
                             SpaceRequirement = 448.47399293373985,
@@ -151,7 +148,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Ei",
                             Name = "Lisandro",
-                            Prey = "Crocodile",
                             SecurityRequirement = 1,
                             Size = 2,
                             SpaceRequirement = 82.512082873150746,
@@ -169,7 +165,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Kip",
                             Name = "Ian",
-                            Prey = "Elephant",
                             SecurityRequirement = 1,
                             Size = 1,
                             SpaceRequirement = 404.71676491420567,
@@ -187,7 +182,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 3,
                             FeedingTime = "Pasta",
                             Name = "Thad",
-                            Prey = "Lion",
                             SecurityRequirement = 1,
                             Size = 3,
                             SpaceRequirement = 468.34364081655798,
@@ -205,7 +199,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Pasta",
                             Name = "Leon",
-                            Prey = "Lion",
                             SecurityRequirement = 2,
                             Size = 6,
                             SpaceRequirement = 56.579863082887542,
@@ -223,7 +216,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 6,
                             FeedingTime = "Kip",
                             Name = "Aisha",
-                            Prey = "Crocodile",
                             SecurityRequirement = 1,
                             Size = 3,
                             SpaceRequirement = 285.21334405765555,
@@ -241,7 +233,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 6,
                             FeedingTime = "Rijst",
                             Name = "Roosevelt",
-                            Prey = "Penguin",
                             SecurityRequirement = 1,
                             Size = 5,
                             SpaceRequirement = 491.68804400213435,
@@ -259,7 +250,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 6,
                             FeedingTime = "Tomaat",
                             Name = "Amely",
-                            Prey = "Zebra",
                             SecurityRequirement = 3,
                             Size = 4,
                             SpaceRequirement = 432.04042462727074,
@@ -277,7 +267,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 1,
                             FeedingTime = "Ei",
                             Name = "Quinn",
-                            Prey = "Elephant",
                             SecurityRequirement = 2,
                             Size = 3,
                             SpaceRequirement = 16.313045614544791,
@@ -295,7 +284,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Melk",
                             Name = "Laverna",
-                            Prey = "Tiger",
                             SecurityRequirement = 3,
                             Size = 3,
                             SpaceRequirement = 223.17880367542563,
@@ -313,7 +301,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 4,
                             FeedingTime = "Kip",
                             Name = "Ona",
-                            Prey = "Crocodile",
                             SecurityRequirement = 2,
                             Size = 4,
                             SpaceRequirement = 199.41648925627419,
@@ -331,7 +318,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 1,
                             FeedingTime = "Appel",
                             Name = "Chyna",
-                            Prey = "Crocodile",
                             SecurityRequirement = 2,
                             Size = 5,
                             SpaceRequirement = 411.3170782110268,
@@ -349,7 +335,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 6,
                             FeedingTime = "Broccoli",
                             Name = "Griffin",
-                            Prey = "Crocodile",
                             SecurityRequirement = 3,
                             Size = 4,
                             SpaceRequirement = 222.31171337995292,
@@ -367,7 +352,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 4,
                             FeedingTime = "Appel",
                             Name = "Orville",
-                            Prey = "Giraffe",
                             SecurityRequirement = 3,
                             Size = 5,
                             SpaceRequirement = 182.93205114683698,
@@ -385,7 +369,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Tomaat",
                             Name = "Frida",
-                            Prey = "Wolf",
                             SecurityRequirement = 1,
                             Size = 1,
                             SpaceRequirement = 498.99183494923255,
@@ -403,7 +386,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 3,
                             FeedingTime = "Banaan",
                             Name = "Rupert",
-                            Prey = "Zebra",
                             SecurityRequirement = 1,
                             Size = 5,
                             SpaceRequirement = 42.225983786501914,
@@ -421,7 +403,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 1,
                             FeedingTime = "Zalm",
                             Name = "Nash",
-                            Prey = "Zebra",
                             SecurityRequirement = 3,
                             Size = 4,
                             SpaceRequirement = 72.629228761712668,
@@ -439,7 +420,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 2,
                             FeedingTime = "Banaan",
                             Name = "Mariane",
-                            Prey = "Elephant",
                             SecurityRequirement = 1,
                             Size = 1,
                             SpaceRequirement = 289.29339600694061,
@@ -457,7 +437,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 1,
                             FeedingTime = "Banaan",
                             Name = "Arden",
-                            Prey = "Eagle",
                             SecurityRequirement = 2,
                             Size = 6,
                             SpaceRequirement = 427.09427699311368,
@@ -475,7 +454,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 6,
                             FeedingTime = "Ei",
                             Name = "Easter",
-                            Prey = "Penguin",
                             SecurityRequirement = 2,
                             Size = 2,
                             SpaceRequirement = 315.28516944743933,
@@ -493,7 +471,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 3,
                             FeedingTime = "Pasta",
                             Name = "Victor",
-                            Prey = "Wolf",
                             SecurityRequirement = 2,
                             Size = 5,
                             SpaceRequirement = 446.3634764712134,
@@ -511,7 +488,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 2,
                             FeedingTime = "Broccoli",
                             Name = "Fred",
-                            Prey = "Eagle",
                             SecurityRequirement = 2,
                             Size = 6,
                             SpaceRequirement = 151.97761894295812,
@@ -529,7 +505,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 3,
                             FeedingTime = "Appel",
                             Name = "Claud",
-                            Prey = "Penguin",
                             SecurityRequirement = 1,
                             Size = 4,
                             SpaceRequirement = 13.287990751344706,
@@ -547,7 +522,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Rijst",
                             Name = "Oceane",
-                            Prey = "Zebra",
                             SecurityRequirement = 2,
                             Size = 5,
                             SpaceRequirement = 300.35924553422223,
@@ -565,7 +539,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 5,
                             FeedingTime = "Broccoli",
                             Name = "Paula",
-                            Prey = "Wolf",
                             SecurityRequirement = 1,
                             Size = 6,
                             SpaceRequirement = 451.99132277257337,
@@ -583,7 +556,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 3,
                             FeedingTime = "Melk",
                             Name = "Gayle",
-                            Prey = "Zebra",
                             SecurityRequirement = 1,
                             Size = 4,
                             SpaceRequirement = 443.87651552626699,
@@ -601,7 +573,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 4,
                             FeedingTime = "Melk",
                             Name = "Mireille",
-                            Prey = "Eagle",
                             SecurityRequirement = 3,
                             Size = 6,
                             SpaceRequirement = 360.46767217594561,
@@ -619,7 +590,6 @@ namespace Dierentuin_eindopdracht.Migrations
                             EnclosureId = 4,
                             FeedingTime = "Pasta",
                             Name = "Virginie",
-                            Prey = "Zebra",
                             SecurityRequirement = 1,
                             Size = 3,
                             SpaceRequirement = 179.08981631933236,

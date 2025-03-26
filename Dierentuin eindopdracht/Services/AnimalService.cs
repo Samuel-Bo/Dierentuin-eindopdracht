@@ -1,4 +1,5 @@
 ﻿using Bogus.DataSets;
+using Dierentuin_eindopdracht.Migrations;
 using Dierentuin_eindopdracht.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -92,6 +93,18 @@ namespace Dierentuin_eindopdracht.Services
             context.SaveChanges();
 
             Console.WriteLine("Animal successfully saved to database!");
+        }
+        public void Assignrandom()
+        {
+            var animals = context.Animals.ToList();
+            var enclosures = context.Enclosures.ToList();
+            var random = new Random();
+
+            foreach (var animal in animals)
+            {
+                int randomIndex = random.Next(enclosures.Count);
+                animal.EnclosureId = enclosures[randomIndex].EnclosureId; //looks for a random enclosure and gets it's EnclosureId
+            }
         }
         public AnimalDto ShowAnimal(int id) //shows the animal that you're trying to edit
         {
@@ -214,6 +227,37 @@ namespace Dierentuin_eindopdracht.Services
                 default:
                     return animals.OrderBy(a => a.AnimalId).ToList();
             }
+        }
+        public void AssignRandomEnclosures()
+        {
+            // Get animals where there's not an enclosure assigned yet
+            var unassignedAnimals = context.Animals
+                .Where(a => a.EnclosureId == null)
+                .ToList();
+
+            // Get all enclosures
+            var availableEnclosures = context.Enclosures.ToList();
+
+            // If no enclosures exist stop the function
+            if (!availableEnclosures.Any())
+            {
+                Console.WriteLine("No enclosures available for assignment");
+                return;
+            }
+
+            var random = new Random();
+
+            foreach (var animal in unassignedAnimals)
+            {
+                // Get a random enclosure
+                var randomEnclosure = availableEnclosures[random.Next(availableEnclosures.Count)];
+                animal.EnclosureId = randomEnclosure.EnclosureId;
+
+                Console.WriteLine($"Assigned {animal.Name} to enclosure {randomEnclosure.Name}");
+            }
+
+            var changes = context.SaveChanges();
+            Console.WriteLine($"Assigned enclosures to {changes} animals"); //log for changes saved
         }
     }
 }
