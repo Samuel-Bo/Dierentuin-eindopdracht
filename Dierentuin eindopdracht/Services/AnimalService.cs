@@ -68,6 +68,33 @@ namespace Dierentuin_eindopdracht.Services
             return animals;
         }
 
+        public void AutoAssignAnimals()
+        {
+
+            var animals = context.Animals
+                .Where(a => a.EnclosureId == null)
+                .ToList();
+
+            var enclosures = context.Enclosures
+                .Select(e=>e.EnclosureId)
+                .ToList();
+
+            var random = new Random();
+
+            foreach (var animal in animals)
+            {
+
+                int randomIndex = random.Next(0, enclosures.Count);
+
+                animal.EnclosureId = enclosures[randomIndex];
+                
+                context.Entry(animal).Property(a=>a.EnclosureId).IsModified = true;
+            }
+
+            context.SaveChanges();
+
+        }
+
         public void CreateAnimal(AnimalDto animalDto) //creating and adding a new enclosure to the database
         {
             var animal = new Animal

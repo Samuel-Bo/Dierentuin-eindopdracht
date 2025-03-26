@@ -143,6 +143,14 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return PartialView(animals);
         }
 
+        [HttpPost]
+        public IActionResult AutoAssign()
+        {
+            animalService.AutoAssignAnimals();
+
+            return View("Index", "Animal");
+        }
+
         [HttpGet]
         public IActionResult Sunrise()
         {
