@@ -25,8 +25,19 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             {
                 animals = animals
                             .Where(a =>
-                                a.Name.ToLower().Contains(searchstring.ToLower()) ||
-                                a.Species.ToLower().Contains(searchstring.ToLower())
+                                a.Name.ToLower().Contains(searchstring.ToLower())||
+                                a.Species.ToLower().Contains(searchstring.ToLower())||
+                                (a.Prey != null && a.Prey.ToLower().Contains(searchstring.ToLower()))||
+                                a.SpaceRequirement.ToString().Contains(searchstring)||
+                                a.FeedingTime.ToLower().Contains(searchstring.ToLower())||
+                                a.Arise.ToString().ToLower().Contains(searchstring.ToLower())||
+                                a.BedTime.ToString().ToLower().Contains(searchstring.ToLower())||
+                                a.Size.ToString().ToLower().Contains(searchstring.ToLower())||
+                                a.DietaryClass.ToString().ToLower().Contains(searchstring.ToLower())||
+                                a.ActivityPattern.ToString().ToLower().Contains(searchstring.ToLower())||
+                                a.SecurityRequirement.ToString().ToLower().Contains(searchstring.ToLower())||
+                                (a.Enclosure != null && a.Enclosure.Name.ToLower().Contains(searchstring.ToLower()))||
+                                (a.Category != null && a.Category.Name.ToLower().Contains(searchstring.ToLower()))
                             ).ToList();
             }
             return View(animals);
