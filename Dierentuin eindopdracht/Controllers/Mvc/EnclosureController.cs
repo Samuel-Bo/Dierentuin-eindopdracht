@@ -112,7 +112,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         }
 
         [HttpGet("Sunset/{enclosureId}")]
-        public IActionResult Sunset(int enclosureId)
+        public IActionResult Sunset(int enclosureId) //sends the sleeping animals to the view
         {
             var animals = enclosureService.GetSunsetAnimals(enclosureId);
 
@@ -120,11 +120,19 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         }
 
         [HttpGet("Sunrise/{enclosureId}")]
-        public IActionResult Sunrise(int enclosureId)
+        public IActionResult Sunrise(int enclosureId) //sends the animals that are awake to the view
         {
             var animals = enclosureService.GetSunriseAnimals(enclosureId);
 
             return PartialView("Sunrise", animals);
+        }
+
+        [HttpGet("FeedingTime")]
+        public IActionResult FeedingTime(int enclosureId) // sends the enclosure's animals to the view
+        {
+            var enclosure = enclosureService.GetEnclosureAnimals(enclosureId);
+
+            return View(enclosure);
         }
 
         //!!---API EXCLUSIVE---!!

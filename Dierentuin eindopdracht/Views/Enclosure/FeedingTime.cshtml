@@ -1,0 +1,62 @@
+﻿@model Enclosure
+@{
+}
+@if (Model.Animals == null)
+{
+    <center>
+        <h2>Sorry there aren't any animals here...</h2>
+    </center>
+}
+else
+{
+    <center>
+        <h2>These are @Model.Name 's animals</h2>
+    </center>
+
+    <hr />
+
+    <div style="overflow-x: auto; max-width: 100%;">
+        <!--Animal index-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Prey</th>
+                    <th>Feedingtime</th>
+                    <th>Diet Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (Animal animal in Model.Animals)
+                {
+                    <tr>
+                        <td>@animal.AnimalId</td>
+                        <td>@animal.Name</td>
+                        <td>@(animal.Prey ?? "None")</td>
+                        <td>@animal.FeedingTime</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(animal.Prey)) //if the animal contains a prey it's a predator and gets a special dialogue
+                            {
+                                <span>Predator (eats @animal.Prey)</span>
+                            }
+                            else
+                            {
+                                <span>Standard diet (@animal.FeedingTime)</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<hr />
+
+<center>
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="Enclosure" asp-action="Index">Return</a>
+    </div>
+</center>

@@ -39,7 +39,7 @@
         <button class="btn btn-warning" id="showSunriseModal" onclick="ShowSunriseModal()">Sunrise☀️</button>
 
         <form asp-controller="Animal" asp-action="AutoAssign" method="post" class="d-inline">
-            <button type="submit" class="btn btn-primary">AutoAssign</button>
+            <button type="submit" class="btn btn-success">AutoAssign Enclosure</button>
         </form>
     </div>
 
@@ -84,7 +84,7 @@
                     <td>@animal.AnimalId</td>
                     <td>@animal.Name</td>
                     <td>@animal.Species</td>    
-                    <td>@animal.Prey</td>
+                    <td>@(animal.Prey ?? "None")</td>
                     <td>@animal.SpaceRequirement</td>
                     <td>@animal.FeedingTime</td>
                     <td>@animal.Arise</td>
@@ -100,6 +100,8 @@
                            asp-route-id="@animal.AnimalId">Edit</a>
                         <a class="btn btn-danger btn-sm" asp-controller="Animal" asp-action="Delete"
                            asp-route-id="@animal.AnimalId">Delete</a>
+                        <a class="btn btn-outline-warning btn-sm" asp-controller="Animal" asp-action="FeedingTime"
+                           asp-route-id="@animal.AnimalId">FeedingTime</a>
                     </td>
                 </tr>
             }

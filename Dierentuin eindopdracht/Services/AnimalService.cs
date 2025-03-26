@@ -259,5 +259,6 @@ namespace Dierentuin_eindopdracht.Services
             var changes = context.SaveChanges();
             Console.WriteLine($"Assigned enclosures to {changes} animals"); //log for changes saved
         }
+
     }
 }

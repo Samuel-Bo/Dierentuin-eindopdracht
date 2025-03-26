@@ -67,6 +67,9 @@
 
                     <!-- Knop om de modal te openen -->
                     <button class="btn btn-warning btn-sunrise btn-sm" onclick="ShowSunriseModal(@enclosure.EnclosureId)">Sunrise☀️</button>
+
+                    <a class="btn btn-outline-warning btn-sm" asp-controller="Enclosure" asp-action="FeedingTime"
+                    asp-route-enclosureId="@enclosure.EnclosureId">FeedingTime</a>
                 </td>
             </tr>
         }

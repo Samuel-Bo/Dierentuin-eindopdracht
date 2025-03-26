@@ -17,6 +17,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         }
 
         //returns a razor view with all animal data
+        [HttpGet]
         public IActionResult Index(string searchstring)
         {
             var animals = animalService.GetAnimals();
@@ -157,6 +158,13 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             animalService.AssignRandomEnclosures();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult FeedingTime(int id)
+        {
+            var animal = animalService.FindAnimal(id);
+
+            return View(animal);
         }
 
         //---API EXCLUSIVE!!!---
