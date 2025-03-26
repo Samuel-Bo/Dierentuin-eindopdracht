@@ -57,20 +57,20 @@
         <thead>
             <tr>
                 <!-- HTML Table Headers with name attributes matching your switch cases -->
-                <th name="id" onclick="GetFilter(this)">ID</th>
-                <th name="name" onclick="GetFilter(this)">Name</th>
-                <th name="species" onclick="GetFilter(this)">Species</th>
-                <th name="prey" onclick="GetFilter(this)">Prey</th>
-                <th name="spacerequirement" onclick="GetFilter(this)">SpaceRequirement</th>
-                <th name="feedingtime" onclick="GetFilter(this)">FeedingTime</th>
-                <th name="arise" onclick="GetFilter(this)">Arise</th>
-                <th name="bedtime" onclick="GetFilter(this)">Bedtime</th>
-                <th name="size" onclick="GetFilter(this)">Size</th>
-                <th name="dietaryclass" onclick="GetFilter(this)">DietaryClass</th>
-                <th name="activitypattern" onclick="GetFilter(this)">ActivityPattern</th>
-                <th name="securityrequirement" onclick="GetFilter(this)">SecurityRequirement</th>
-                <th name="enclosure" onclick="GetFilter(this)">Enclosure</th>
-                <th name="category" onclick="GetFilter(this)">Category</th>
+                <th name="id" >ID</th>
+                <th name="name" >Name</th>
+                <th name="species" >Species</th>
+                <th name="prey" >Prey</th>
+                <th name="spacerequirement" >SpaceRequirement</th>
+                <th name="feedingtime" >FeedingTime</th>
+                <th name="arise" >Arise</th>
+                <th name="bedtime" >Bedtime</th>
+                <th name="size" >Size</th>
+                <th name="dietaryclass" >DietaryClass</th>
+                <th name="activitypattern" >ActivityPattern</th>
+                <th name="securityrequirement" >SecurityRequirement</th>
+                <th name="enclosure" >Enclosure</th>
+                <th name="category" >Category</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -171,6 +171,10 @@
             // Redirect to the Filter action with the chosen filter
             window.location.href = `/Animal/Filter?filter=${encodeURIComponent(filterValue)}`;
         }
+
+        document.querySelectorAll('th').forEach(function(element) {
+            element.setAttribute('onclick','GetFilter(this)')
+        });
     </script>
 }
 
