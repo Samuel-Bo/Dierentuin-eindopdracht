@@ -2,6 +2,7 @@
 using Dierentuin_eindopdracht.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 using static Dierentuin_eindopdracht.Models.ZooEnums;
 
 namespace Dierentuin_eindopdracht.Services
@@ -174,6 +175,45 @@ namespace Dierentuin_eindopdracht.Services
                 .ToList();
 
             return wakeyAnimals;
+        }
+
+        public List<Animal> FilterAnimals(string filter)
+        {
+            var animals = context.Animals.Include(a => a.Enclosure).Include(a => a.Category);
+
+            switch (filter.ToLower())
+            {
+                case "id":
+                    return animals.OrderBy(a => a.AnimalId).ToList();
+                case "name":
+                    return animals.OrderBy(a => a.Name).ToList();
+                case "species":
+                    return animals.OrderBy(a => a.Species).ToList();
+                case "prey":
+                    return animals.OrderBy(a => a.Prey).ToList();
+                case "spacerequirement":
+                    return animals.OrderBy(a => a.SpaceRequirement).ToList();
+                case "feedingtime":
+                    return animals.OrderBy(a => a.FeedingTime).ToList();
+                case "arise":
+                    return animals.OrderBy(a => a.Arise).ToList();
+                case "bedtime":
+                    return animals.OrderBy(a => a.BedTime).ToList();
+                case "size":
+                    return animals.OrderBy(a => a.Size).ToList();
+                case "dietaryclass":
+                    return animals.OrderBy(a => a.DietaryClass).ToList();
+                case "activitypattern":
+                    return animals.OrderBy(a => a.ActivityPattern).ToList();
+                case "securityrequirement":
+                    return animals.OrderBy(a => a.SecurityRequirement).ToList();
+                case "enclosure":
+                    return animals.OrderBy(a => a.Enclosure != null ? a.Enclosure.Name : "").ToList();
+                case "category":
+                    return animals.OrderBy(a => a.Category != null ? a.Category.Name : "").ToList();
+                default:
+                    return animals.OrderBy(a => a.AnimalId).ToList();
+            }
         }
     }
 }

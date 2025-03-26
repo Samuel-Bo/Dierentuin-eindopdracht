@@ -23,12 +23,22 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
 
             if (!String.IsNullOrEmpty(searchstring))
             {
-                animals = animals.Where(n => n.Name.ToLower().Contains(searchstring.ToLower())||
-                n.Species.ToLower().Contains(searchstring.ToLower())).ToList();
-
+                animals = animals
+                            .Where(a =>
+                                a.Name.ToLower().Contains(searchstring.ToLower()) ||
+                                a.Species.ToLower().Contains(searchstring.ToLower())
+                            ).ToList();
             }
-
             return View(animals);
+
+        }
+
+        [HttpGet]
+        public IActionResult Filter(string filter)
+        {
+            var animals = animalService.FilterAnimals(filter);
+
+            return View("Index", animals);
         }
 
         [HttpGet("Create")]

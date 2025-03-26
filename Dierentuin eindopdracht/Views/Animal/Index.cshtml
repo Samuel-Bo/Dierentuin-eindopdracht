@@ -56,20 +56,21 @@
     <table id="animals" class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Species</th>
-                <th>Prey</th>
-                <th>SpaceRequirement</th>
-                <th>Feedingtime</th>
-                <th>Arise</th>
-                <th>Bedtime</th>
-                <th>Size</th>
-                <th>DietaryClass</th>
-                <th>ActivityPattern</th>
-                <th>SecurityRequirement</th> 
-                <th>Enclosure</th>
-                <th>Category</th>
+                <!-- HTML Table Headers with name attributes matching your switch cases -->
+                <th name="id" onclick="GetFilter(this)">ID</th>
+                <th name="name" onclick="GetFilter(this)">Name</th>
+                <th name="species" onclick="GetFilter(this)">Species</th>
+                <th name="prey" onclick="GetFilter(this)">Prey</th>
+                <th name="spacerequirement" onclick="GetFilter(this)">SpaceRequirement</th>
+                <th name="feedingtime" onclick="GetFilter(this)">FeedingTime</th>
+                <th name="arise" onclick="GetFilter(this)">Arise</th>
+                <th name="bedtime" onclick="GetFilter(this)">Bedtime</th>
+                <th name="size" onclick="GetFilter(this)">Size</th>
+                <th name="dietaryclass" onclick="GetFilter(this)">DietaryClass</th>
+                <th name="activitypattern" onclick="GetFilter(this)">ActivityPattern</th>
+                <th name="securityrequirement" onclick="GetFilter(this)">SecurityRequirement</th>
+                <th name="enclosure" onclick="GetFilter(this)">Enclosure</th>
+                <th name="category" onclick="GetFilter(this)">Category</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -163,14 +164,13 @@
             });
         }
 
-        const headers = document.querySelectorAll('#animals th');
+        function GetFilter(clickedHeader) {
+            // Get the name attribute from the clicked th element
+            const filterValue = clickedHeader.getAttribute('name').toLowerCase();
 
-        headers.forEach((header)=>{
-            header.addEventListener('click',()=>{
-                const headerName = header.textContent || header.innerText;
-                alert('it works '+headerName);
-            });
-        });
+            // Redirect to the Filter action with the chosen filter
+            window.location.href = `/Animal/Filter?filter=${encodeURIComponent(filterValue)}`;
+        }
     </script>
 }
 
