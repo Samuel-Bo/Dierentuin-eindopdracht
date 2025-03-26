@@ -28,7 +28,7 @@
 
 <div style="height: 50px;"></div> 
 
-<div class="row mb-5">
+<div class="d-flex">
     <div class="col">
         <a class="btn btn-primary" asp-controller="Animal" asp-action="Create">New Animal</a>
 
@@ -37,9 +37,19 @@
 
         <!-- Knop om de modal te openen -->
         <button class="btn btn-warning" id="showSunriseModal" onclick="ShowSunriseModal()">Sunrise☀️</button>
+        
     </div>
-    <div class="col">
-    </div>
+    
+    <form class="d-flex" asp-action="Index" asp-controller="Animal">
+        <input name="searchstring" class="form-control m-1" type="Search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-dark" type="submit">Search</button>
+    </form>
+
+    
+</div>
+
+<div>
+    <a asp-action="Index" class="text-dark">Show all animals</a>
 </div>
 
 <div style="overflow-x: auto; max-width: 100%;"> <!--Animal index-->

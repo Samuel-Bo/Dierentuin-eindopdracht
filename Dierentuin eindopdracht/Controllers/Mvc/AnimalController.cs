@@ -17,9 +17,17 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         }
 
         //returns a razor view with all animal data
-        public IActionResult Index()
+        public IActionResult Index(string searchstring)
         {
             var animals = animalService.GetAnimals();
+
+            if (!String.IsNullOrEmpty(searchstring))
+            {
+                animals = animals.Where(n => n.Name.ToLower().Contains(searchstring.ToLower())||
+                n.Species.ToLower().Contains(searchstring.ToLower())).ToList();
+
+            }
+
             return View(animals);
         }
 
