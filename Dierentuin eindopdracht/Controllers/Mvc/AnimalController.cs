@@ -17,7 +17,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
         }
 
         //returns a razor view with all animal data
-        [HttpGet]
+        [HttpGet("Index")]
         public IActionResult Index(string searchstring)
         {
             var animals = animalService.GetAnimals();
