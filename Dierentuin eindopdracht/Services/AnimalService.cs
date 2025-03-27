@@ -240,9 +240,23 @@ namespace Dierentuin_eindopdracht.Services
             {
                 foreach (var animal in animals)
                 {
-                    int randomIndex = random.Next(enclosures.Count);
-                    animal.EnclosureId = enclosures[randomIndex].EnclosureId;
-                    context.Entry(animal).State = EntityState.Modified;
+                    // Find suitable enclosures based on animal requirements
+                    var suitableEnclosures = enclosures
+                        .Where(e => e.Size >= animal.SpaceRequirement &&
+                                   e.SecurityLevel >= animal.SecurityRequirement)
+                        .ToList();
+
+                    if (suitableEnclosures.Any())
+                    {
+                        // Assign to a random suitable enclosure
+                        int randomIndex = random.Next(suitableEnclosures.Count);
+                        animal.EnclosureId = suitableEnclosures[randomIndex].EnclosureId;
+                    }
+                    else
+                    {
+                        // No suitable enclosure found - set to null
+                        animal.EnclosureId = null;
+                    }
                 }
                 context.SaveChanges();
             }

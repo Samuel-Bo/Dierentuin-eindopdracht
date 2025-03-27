@@ -119,7 +119,7 @@ namespace Dierentuin_eindopdracht.Services
             {
                 var enclosure = new Enclosure
                 {
-                    Name = $"Auto Enclosure {i + 1}",
+                    Name = $"Enclosure {i + 1}",
                     Size = random.Next(100, 1000), // Realistic size range
                     Climate = (ZooEnums.Climate)climate.GetValue(random.Next(climate.Length)),
                     Habitat = (ZooEnums.HabitatType)habitat.GetValue(random.Next(habitat.Length)),
