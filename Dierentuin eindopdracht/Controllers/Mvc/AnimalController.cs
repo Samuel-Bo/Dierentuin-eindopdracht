@@ -160,8 +160,6 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index");
         }
 
-      
-
         public IActionResult FeedingTime(int id)
         {
             var animal = animalService.FindAnimal(id);

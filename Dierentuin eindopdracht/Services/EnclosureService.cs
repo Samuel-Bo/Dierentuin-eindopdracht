@@ -106,31 +106,29 @@ namespace Dierentuin_eindopdracht.Services
 
         public List<Enclosure> RandomEnclosures()
         {
-            
             var random = new Random();
             var climate = Enum.GetValues(typeof(ZooEnums.Climate));
             var habitat = Enum.GetValues(typeof(ZooEnums.HabitatType));
-            var securityLevel = Enum.GetValues(typeof (ZooEnums.SecurityLevel));
+            var securityLevel = Enum.GetValues(typeof(ZooEnums.SecurityLevel));
             var enclosures = new List<Enclosure>();
-            int randomEnclosures = random.Next(10);
 
+            // Ensure at least 1 enclosure, max 10
+            int randomEnclosures = random.Next(1, 11);
 
             for (int i = 0; i < randomEnclosures; i++)
             {
-                
-                var enclosure =  new Enclosure
+                var enclosure = new Enclosure
                 {
-                    Name = "Auto Enclosure",
-                    Size = random.NextDouble(),
+                    Name = $"Auto Enclosure {i + 1}",
+                    Size = random.Next(100, 1000), // Realistic size range
                     Climate = (ZooEnums.Climate)climate.GetValue(random.Next(climate.Length)),
                     Habitat = (ZooEnums.HabitatType)habitat.GetValue(random.Next(habitat.Length)),
                     SecurityLevel = (ZooEnums.SecurityLevel)securityLevel.GetValue(random.Next(securityLevel.Length)),
                     ZooId = 1
-
                 };
 
                 context.Enclosures.Add(enclosure);
-                enclosures.Add (enclosure);
+                enclosures.Add(enclosure);
             }
 
             context.SaveChanges();
