@@ -104,18 +104,15 @@ namespace Dierentuin_eindopdracht.Services
 
         }
 
-        public Enclosure RandomEnclosure()
+        public List<Enclosure> RandomEnclosures()
         {
-            
             
             var random = new Random();
             var climate = Enum.GetValues(typeof(ZooEnums.Climate));
             var habitat = Enum.GetValues(typeof(ZooEnums.HabitatType));
             var securityLevel = Enum.GetValues(typeof (ZooEnums.SecurityLevel));
-
-
-            int randomEnclosures = random.Next(6);
-
+            var enclosures = new List<Enclosure>();
+            int randomEnclosures = random.Next(10);
 
 
             for (int i = 0; i < randomEnclosures; i++)
@@ -132,13 +129,12 @@ namespace Dierentuin_eindopdracht.Services
 
                 };
 
+                context.Enclosures.Add(enclosure);
+                enclosures.Add (enclosure);
             }
 
             context.SaveChanges();
-
-            context.SaveChanges();
-
-            return enclosure;
+            return enclosures;
         }
 
         public void EditEnclosure(int id, EnclosureDto enclosureDto)

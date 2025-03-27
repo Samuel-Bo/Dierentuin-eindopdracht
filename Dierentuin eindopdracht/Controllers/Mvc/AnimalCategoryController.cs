@@ -15,30 +15,34 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             animalService = _animalService;
         }
 
+        //return index of categories
         [HttpGet("Index")]
-        public IActionResult Index() //return index of categories
+        public IActionResult Index() 
         {
             var categories = categoryService.GetCategories();
             return View(categories);
         }
 
+        //return category's animals by Id to the view
         [HttpGet("CategoryAnimals")]
-        public IActionResult CategoryAnimals(int categoryId) //return category's animals by Id to the view
+        public IActionResult CategoryAnimals(int categoryId) 
         {
             var categories = categoryService.GetCategoryAnimals(categoryId);
             return View(categories);
         }
 
+        //Shows the creating view for categories, we need this to acces the create page
         [HttpGet("Create")]
-        public IActionResult Create()//Shows the creating view for categories, we need this to acces the create page 
+        public IActionResult Create() 
         {
             var animals = animalService.EmptyCategoryGet();//need this for efficiency
             ViewBag.EmptyAnimals = animals;
             return View();
         }
 
+        //Actually Creates the enclosure and returns to the index after valid creation
         [HttpPost("Create")]
-        public IActionResult Create(AnimalCategoryDto categoryDto)//Actually Creates the enclosure and returns to the index after valid creation
+        public IActionResult Create(AnimalCategoryDto categoryDto)
         {
             if (!ModelState.IsValid)
             {
@@ -53,8 +57,9 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index");
         }
 
+        //shows us the enclosure data when you edit the enclosure
         [HttpGet("Edit")]
-        public IActionResult Edit(int id)//shows us the enclosure data when you edit the enclosure
+        public IActionResult Edit(int id)
         {
             var categoryDto = categoryService.ShowCategory(id);
 
@@ -69,8 +74,9 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return View(categoryDto);
         }
 
+        //actually edits the enclosure
         [HttpPost("Edit")]
-        public IActionResult Edit(int id, AnimalCategoryDto categoryDto)//actually edits the enclosure
+        public IActionResult Edit(int id, AnimalCategoryDto categoryDto)
         {
             var category = categoryService.FindCategory(id);
 
@@ -97,8 +103,9 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index", "AnimalCategory");
         }
 
+        //deleting animals
         [HttpGet] 
-        public IActionResult Delete(int id) //deleting animals
+        public IActionResult Delete(int id) 
         {
             categoryService.DeleteCategory(id);
 

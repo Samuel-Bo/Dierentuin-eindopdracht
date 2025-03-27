@@ -28,7 +28,6 @@ namespace Dierentuin_eindopdracht.Services
             return animal;
 
         }
-
         
         public List<Animal> GetAnimals() //list for animal index
         {
@@ -107,17 +106,9 @@ namespace Dierentuin_eindopdracht.Services
             var enclosures = context.Enclosures.ToList();
             var random = new Random();
 
-            if (enclosures.Count() ==0)
+            if (!enclosures.Any())
             {
-                int randomEnclosures = random.Next(6);
-
-                for (int i = 0; i < randomEnclosures; i++) 
-                {
-                    enclosures.Add(enclosureService.RandomEnclosure());
-                    
-                }
-
-                context.SaveChanges();
+                enclosureService.RandomEnclosures();
             }
 
             foreach (var animal in animals)
@@ -125,6 +116,8 @@ namespace Dierentuin_eindopdracht.Services
                 int randomIndex = random.Next(enclosures.Count);
                 animal.EnclosureId = enclosures[randomIndex].EnclosureId; //looks for a random enclosure and gets it's EnclosureId
             }
+
+            context.SaveChanges();
         }
 
         
