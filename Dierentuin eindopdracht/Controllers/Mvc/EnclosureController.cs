@@ -135,6 +135,14 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return View(enclosure);
         }
 
+        [HttpPost]
+        public IActionResult RemoveEnclosures()
+        {
+            enclosureService.RemoveAllEnclosures();
+
+            return RedirectToAction("Index");
+        }
+
         //!!---API EXCLUSIVE---!!
 
         [HttpGet("api/enclosures")] //api display of enclosures

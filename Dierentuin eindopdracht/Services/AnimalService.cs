@@ -2,7 +2,9 @@
 using Dierentuin_eindopdracht.Migrations;
 using Dierentuin_eindopdracht.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics.CodeAnalysis;
 using static Dierentuin_eindopdracht.Models.ZooEnums;
 
@@ -11,10 +13,13 @@ namespace Dierentuin_eindopdracht.Services
     public class AnimalService //Class for animal logic
     {
         private readonly ZooDbContext context;
-        public AnimalService(ZooDbContext context)
+        private readonly EnclosureService enclosureService;
+        public AnimalService(ZooDbContext context, EnclosureService enclosureService)
         {
             this.context = context;
+            this.enclosureService = enclosureService;
         }
+        
         public Animal FindAnimal(int id)
         {
 
@@ -23,6 +28,8 @@ namespace Dierentuin_eindopdracht.Services
             return animal;
 
         }
+
+        
         public List<Animal> GetAnimals() //list for animal index
         {
             var animals = context.Animals
@@ -100,12 +107,28 @@ namespace Dierentuin_eindopdracht.Services
             var enclosures = context.Enclosures.ToList();
             var random = new Random();
 
+            if (enclosures.Count() ==0)
+            {
+                int randomEnclosures = random.Next(6);
+
+                for (int i = 0; i < randomEnclosures; i++) 
+                {
+                    enclosures.Add(enclosureService.RandomEnclosure());
+                    
+                }
+
+                context.SaveChanges();
+            }
+
             foreach (var animal in animals)
             {
                 int randomIndex = random.Next(enclosures.Count);
                 animal.EnclosureId = enclosures[randomIndex].EnclosureId; //looks for a random enclosure and gets it's EnclosureId
             }
         }
+
+        
+
         public AnimalDto ShowAnimal(int id) //shows the animal that you're trying to edit
         {
             var animal = FindAnimal(id);

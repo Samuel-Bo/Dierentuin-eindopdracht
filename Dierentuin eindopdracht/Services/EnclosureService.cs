@@ -1,6 +1,7 @@
 ﻿using Dierentuin_eindopdracht.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Dierentuin_eindopdracht.Services
 {
@@ -23,7 +24,10 @@ namespace Dierentuin_eindopdracht.Services
         {
             var enclosures = context.Enclosures
                 .Include(e => e.Animals)
-                .OrderByDescending(e => e.EnclosureId).ToList();
+                .OrderByDescending(e => e.EnclosureId)
+                .ToList();
+
+            
 
             return enclosures;
         }
@@ -75,6 +79,68 @@ namespace Dierentuin_eindopdracht.Services
 
             return enclosureDto;
         }
+
+        public void RemoveAllEnclosures()
+        {
+            var enclosures = context.Enclosures
+                .ToList();
+
+            var animals = context.Animals
+                .ToList();
+
+            foreach (var animal in animals) 
+            { 
+                animal.EnclosureId = null;
+            }
+
+            foreach (var enclosure in enclosures)
+            {
+                
+
+                context.Enclosures.Remove(enclosure);
+            }
+
+            context.SaveChanges();
+
+        }
+
+        public Enclosure RandomEnclosure()
+        {
+            
+            
+            var random = new Random();
+            var climate = Enum.GetValues(typeof(ZooEnums.Climate));
+            var habitat = Enum.GetValues(typeof(ZooEnums.HabitatType));
+            var securityLevel = Enum.GetValues(typeof (ZooEnums.SecurityLevel));
+
+
+            int randomEnclosures = random.Next(6);
+
+
+
+            for (int i = 0; i < randomEnclosures; i++)
+            {
+                
+                var enclosure =  new Enclosure
+                {
+                    Name = "Auto Enclosure",
+                    Size = random.NextDouble(),
+                    Climate = (ZooEnums.Climate)climate.GetValue(random.Next(climate.Length)),
+                    Habitat = (ZooEnums.HabitatType)habitat.GetValue(random.Next(habitat.Length)),
+                    SecurityLevel = (ZooEnums.SecurityLevel)securityLevel.GetValue(random.Next(securityLevel.Length)),
+                    ZooId = 1
+
+                };
+
+            }
+
+            context.SaveChanges();
+
+            context.SaveChanges();
+
+            return enclosure;
+        }
+
         public void EditEnclosure(int id, EnclosureDto enclosureDto)
         {
             var enclosure = FindEnclosure(id);
@@ -99,12 +165,19 @@ namespace Dierentuin_eindopdracht.Services
 
                 foreach (Animal animal in addAnimals)
                 {
-                    if (!enclosure.Animals.Contains(animal)) // Prevent duplicates
+                    if (!enclosure.Animals.Contains(animal) && enclosure.Size >= animal.SpaceRequirement) // Prevent duplicates and checks if the animal fits
                     {
                         enclosure.Animals.Add(animal);
                     }
+                    else
+                    {
+                        Console.WriteLine("This animal doesnt fit");
+                    }
+                    
                 }
             }
+
+
 
             // Remove deleted animals
             if (enclosureDto.DeleteAnimalIds != null && enclosureDto.DeleteAnimalIds.Any()) // removes all of the animals that were selected at Delete

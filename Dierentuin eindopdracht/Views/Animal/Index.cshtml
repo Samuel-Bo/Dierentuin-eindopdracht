@@ -38,9 +38,13 @@
         <!-- Knop om de modal te openen -->
         <button class="btn btn-warning" id="showSunriseModal" onclick="ShowSunriseModal()">Sunrise☀️</button>
 
+        <!-- Button to assign all animals to enclosures if they havent already -->
         <form asp-controller="Animal" asp-action="AutoAssign" method="post" class="d-inline">
             <button type="submit" class="btn btn-success">AutoAssign Enclosure</button>
         </form>
+
+        
+
     </div>
 
     <form method="get" class="d-flex" asp-action="Index" asp-controller="Animal">
@@ -176,7 +180,7 @@
             window.location.href = `/Animal/Filter?filter=${encodeURIComponent(filterValue)}`;
         }
 
-        document.querySelectorAll('th').forEach(function(element) {
+        document.querySelectorAll('th').forEach(function(element) { // Applies the filter to all headers
             element.setAttribute('onclick','GetFilter(this)')
         });
     </script>
