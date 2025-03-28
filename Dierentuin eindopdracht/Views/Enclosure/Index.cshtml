@@ -20,15 +20,20 @@
 
 <div class="row mb-5">
     <div class="col">
+
+        <!--Add Enclosures-->
         <a class="btn btn-primary" asp-controller="Enclosure" asp-action="Create">New Enclosure</a>
+
+        <!--Bulk delete enclosures-->
+        <form asp-controller="Enclosure" asp-action="RemoveEnclosures" class="d-inline">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you Sure?')">Remove Enclosures</button>
+        </form>
+
     </div>
     <div class="col">
 
     </div>
 
-    <form asp-controller="Enclosure" asp-action="RemoveEnclosures" class="d-inline">
-        <button type="submit" class="btn btn-outline-warning">Remove Enclosures</button>
-    </form>
 
 </div>
 

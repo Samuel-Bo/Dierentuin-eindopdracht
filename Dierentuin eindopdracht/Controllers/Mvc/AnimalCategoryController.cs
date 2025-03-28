@@ -112,7 +112,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index", "AnimalCategory");
         }
 
-        //!!---API EXCLUSIVE---!!
+        //!!---API EXCLUSIVE, NO VISUAL REPRESENTATION---!!
 
         [HttpGet("api/categories")]
         public IActionResult Get()

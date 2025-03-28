@@ -56,6 +56,7 @@ namespace Dierentuin_eindopdracht.Services
 
             Console.WriteLine("Enclosure successfully saved to database!");
         }
+
         public Enclosure GetEnclosureAnimals(int id) //shows all animals that are linked to the current enclosure
         {
             return context.Enclosures

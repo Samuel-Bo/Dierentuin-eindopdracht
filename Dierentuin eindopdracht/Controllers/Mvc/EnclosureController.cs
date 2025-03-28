@@ -143,7 +143,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index");
         }
 
-        //!!---API EXCLUSIVE---!!
+        //!!---API EXCLUSIVE, NO VISUAL REPRESENTATION---!!
 
         [HttpGet("api/enclosures")] //api display of enclosures
         public IActionResult Get()

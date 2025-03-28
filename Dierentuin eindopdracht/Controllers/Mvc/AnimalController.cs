@@ -160,6 +160,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return RedirectToAction("Index");
         }
 
+        [HttpGet("FeedingTime")]
         public IActionResult FeedingTime(int id)
         {
             var animal = animalService.FindAnimal(id);
@@ -167,7 +168,7 @@ namespace Dierentuin_eindopdracht.Controllers.Mvc
             return View(animal);
         }
 
-        //---API EXCLUSIVE!!!---
+        //!!---API EXCLUSIVE, NO VISUAL REPRESENTATION---!!
 
         [HttpGet("api/animals")]
         public IActionResult Get()
