@@ -1,0 +1,190 @@
+﻿@model List<Animal>
+@{
+}
+
+<style>
+    th {
+        cursor: pointer;
+    }
+
+    .modal-content {
+        max-height: 80vh;
+        overflow: auto; /* clips content and adds a scrollbar for it */
+    }
+
+    .modal-body {
+        max-height: 60vh;
+        overflow-y: auto; /* clips content and adds a scrollbar for it */
+    }
+</style>
+
+<h2 style="text-align: center;"class="display-4">These are your animals</h2>
+
+<br />
+
+<p style="text-align: center;">You can scroll left and right because there are a ton of properties</p>
+
+
+
+<div style="height: 50px;"></div> 
+
+<div class="d-flex">
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="Animal" asp-action="Create">New Animal</a>
+
+        <!-- Knop om de modal te openen -->
+        <button class="btn btn-dark" id="showSunsetModal" onclick="ShowSunsetModal()">Sunset🌙</button>
+
+        <!-- Knop om de modal te openen -->
+        <button class="btn btn-warning" id="showSunriseModal" onclick="ShowSunriseModal()">Sunrise☀️</button>
+
+        <!-- Button to assign all animals to enclosures if they havent already -->
+        <form asp-controller="Animal" asp-action="AutoAssign" method="post" class="d-inline">
+            <button type="submit" class="btn btn-success">AutoAssign Enclosure</button>
+        </form>
+
+        
+
+    </div>
+
+    <form method="get" class="d-flex" asp-action="Index" asp-controller="Animal">
+        <input name="searchstring" class="form-control m-1" type="Search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-dark" type="submit">Search</button>
+    </form>
+    
+</div>
+
+<div>
+    <a asp-action="Index" class="text-dark">Show all animals</a>
+</div>
+
+<div style="overflow-x: auto; max-width: 100%;"> <!--Animal index-->
+    <table id="animals" class="table">
+        <thead>
+            <tr>
+                <!-- HTML Table Headers with name attributes matching your switch cases -->
+                <th name="id" >ID</th>
+                <th name="name" >Name</th>
+                <th name="species" >Species</th>
+                <th name="prey" >Prey</th>
+                <th name="spacerequirement" >SpaceRequirement</th>
+                <th name="feedingtime" >FeedingTime</th>
+                <th name="arise" >Arise</th>
+                <th name="bedtime" >Bedtime</th>
+                <th name="size" >Size</th>
+                <th name="dietaryclass" >DietaryClass</th>
+                <th name="activitypattern" >ActivityPattern</th>
+                <th name="securityrequirement" >SecurityRequirement</th>
+                <th name="enclosure" >Enclosure</th>
+                <th name="category" >Category</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var animal in Model)
+            {
+                <tr>
+                    <td>@animal.AnimalId</td>
+                    <td>@animal.Name</td>
+                    <td>@animal.Species</td>    
+                    <td>@(animal.Prey ?? "None")</td>
+                    <td>@animal.SpaceRequirement</td>
+                    <td>@animal.FeedingTime</td>
+                    <td>@animal.Arise</td>
+                    <td>@animal.BedTime</td>
+                    <td>@animal.Size</td>
+                    <td>@animal.DietaryClass</td>
+                    <td>@animal.ActivityPattern</td>
+                    <td>@animal.SecurityRequirement</td>
+                    <td>@(animal.Enclosure?.Name ?? "No Enclosure")</td> <!--Won't try to acces if the enclosure == null and displays string if null-->
+                    <td>@(animal.Category?.Name ?? "No Category")</td> <!--Won't try to acces if the category == null and displays string if null-->
+                    <td style="white-space:nowrap">
+                        <a class="btn btn-primary btn-sm" asp-controller="Animal" asp-action="Edit"
+                           asp-route-id="@animal.AnimalId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Animal" asp-action="Delete"
+                           asp-route-id="@animal.AnimalId">Delete</a>
+                        <a class="btn btn-outline-warning btn-sm" asp-controller="Animal" asp-action="FeedingTime"
+                           asp-route-id="@animal.AnimalId">FeedingTime</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Sunset Modal, the styling of the modal and the ids we need to connect to elements and functions-->
+<div class="modal fade" id="sunsetModal" tabindex="-1" aria-labelledby="sunsetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sunsetModalLabel">Deze dieren zijn aan het slapen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sunsetAnimalsContainer"> <!--this is where the body of the modal is displayed-->
+                    <p>Laden...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sunrise Modal, the styling of the modal and the ids we need to connect to elements and functions-->
+<div class="modal fade" id="sunriseModal" tabindex="-1" aria-labelledby="sunriseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sunsetModalLabel">Deze dieren zijn wakker</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sunriseAnimalsContainer">
+                    <!--this is where the body of the modal is displayed-->
+                    <p>Laden...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        function ShowSunsetModal() {
+            $.ajax({
+                url: "/Animal/Sunset", //at this Url the data gets requested
+                type: "GET",           //This is the restful request that's being used so in this case it Gets data
+                success: function (data) {
+                    $("#sunsetAnimalsContainer").html(data); //here the data at a succes of the request gets parsed to an object with the id sunsetAnimalsContainer
+                    $("#sunsetModal").modal("show");
+                }
+            });
+        }
+        function ShowSunriseModal() {
+            $.ajax({
+                url: "/Animal/Sunrise", //at this Url the data gets requested
+                type: "GET",           //This is the restful request that's being used so in this case it Gets data
+                success: function (data) {
+                    $("#sunriseAnimalsContainer").html(data); //here the data at a succes of the request gets parsed to an object with the id sunsetAnimalsContainer
+                    $("#sunriseModal").modal("show");
+                }
+            });
+        }
+
+        function GetFilter(clickedHeader) {
+            // Get the name attribute from the clicked th element
+            const filterValue = clickedHeader.getAttribute('name').toLowerCase();
+
+            // Redirect to the Filter action with the chosen filter
+            window.location.href = `/Animal/Filter?filter=${encodeURIComponent(filterValue)}`;
+        }
+
+        document.querySelectorAll('th').forEach(function(element) { // Applies the filter to all headers
+            element.setAttribute('onclick','GetFilter(this)')
+        });
+    </script>
+}
+
+
+

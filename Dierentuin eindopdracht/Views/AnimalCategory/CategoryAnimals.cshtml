@@ -1,0 +1,67 @@
+﻿@model AnimalCategory
+@{
+}
+@if (Model.Animals.Count == 0)
+{
+    <center>
+        <h2>Sorry there aren't any animals here...</h2>
+    </center>
+}
+else
+{
+    <center>
+        <h2>These are @Model.Name 's animals</h2>
+    </center>
+
+    <hr />
+
+    <div style="overflow-x: auto; max-width: 100%;">
+        <!--Animal index-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Species</th>
+                    <th>Prey</th>
+                    <th>SpaceRequirement</th>
+                    <th>Feedingtime</th>
+                    <th>Arise</th>
+                    <th>Bedtime</th>
+                    <th>Size</th>
+                    <th>DietaryClass</th>
+                    <th>ActivityPattern</th>
+                    <th>SecurityRequirement</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (Animal animal in Model.Animals)
+                {
+                    <tr>
+                        <td>@animal.AnimalId</td>
+                        <td>@animal.Name</td>
+                        <td>@animal.Species</td>
+                        <td>@animal.Prey</td>
+                        <td>@animal.SpaceRequirement</td>
+                        <td>@animal.FeedingTime</td>
+                        <td>@animal.Arise</td>
+                        <td>@animal.BedTime</td>
+                        <td>@animal.Size</td>
+                        <td>@animal.DietaryClass</td>
+                        <td>@animal.ActivityPattern</td>
+                        <td>@animal.SecurityRequirement</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<hr />
+
+<center>
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="AnimalCategory" asp-action="Index">Return</a>
+    </div>
+</center>

@@ -1,0 +1,42 @@
+﻿@model Dierentuin_eindopdracht.Models.Animal
+@{
+    ViewData["Title"] = "Animal Diet";
+}
+
+<h2 class="display-4 text-center">This is what @Model.Name eats</h2>
+
+<div style="overflow-x: auto; max-width: 100%;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Prey</th>
+                <th>Feeding Time</th>
+                <th>Diet Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.AnimalId</td>
+                <td>@Model.Name</td>
+                <td>@(Model.Prey ?? "None")</td>
+                <td>@Model.FeedingTime</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(Model.Prey)) //if the animal contains a prey it's a predator and gets a special dialogue
+                    {
+                        <span>Predator (eats @Model.Prey)</span>
+                    }
+                    else
+                    {
+                        <span>Standard diet (@Model.FeedingTime)</span>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-primary">Back to All Animals</a> <!--Return button-->
+</div>

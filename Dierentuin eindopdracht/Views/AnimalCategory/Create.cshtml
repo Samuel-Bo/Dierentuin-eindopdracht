@@ -1,0 +1,45 @@
+﻿@model AnimalCategoryDto
+@{
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto rounded border p-3">
+        <h2 class="text-center mb-5">New AnimalCategory</h2>
+
+        <form method="post">
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    @if (ViewBag.EmptyAnimals != null)
+                    {
+                        @foreach (var animal in ViewBag.EmptyAnimals)
+                        {
+                            <div>
+                                <input type="checkbox" id="@animal.AnimalId" name="SelectedAnimalIds" value="@animal.AnimalId" />
+                                <label for="@animal.AnimalId">@animal.Name</label>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    <a class="btn btn-primary" asp-controller="AnimalCategory" asp-action="Index">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

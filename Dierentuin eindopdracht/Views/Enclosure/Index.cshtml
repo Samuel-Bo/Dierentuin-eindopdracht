@@ -1,0 +1,155 @@
+﻿@model List<Enclosure>
+@{
+}
+
+<style>
+    .modal-content {
+        max-height: 80vh;
+        overflow: auto; /* clips content and adds a scrollbar for it */
+    }
+
+    .modal-body {
+        max-height: 60vh;
+        overflow-y: auto; /* clips content and adds a scrollbar for it */
+    }
+</style>
+
+<h2 style="text-align: center;" class="display-4">These are your enclosures</h2>
+
+<div style="height: 50px;"></div>
+
+<div class="row mb-5">
+    <div class="col">
+
+        <!--Add Enclosures-->
+        <a class="btn btn-primary" asp-controller="Enclosure" asp-action="Create">New Enclosure</a>
+
+        <!--Bulk delete enclosures-->
+        <form asp-controller="Enclosure" asp-action="RemoveEnclosures" class="d-inline">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you Sure?')">Remove Enclosures</button>
+        </form>
+
+    </div>
+    <div class="col">
+
+    </div>
+
+
+</div>
+
+<table class="table"> <!--Enclosure index-->
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Climate</th>
+            <th>Habitat</th>
+            <th>SecurityLevel</th>
+            <th>Animals</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var enclosure in Model)
+        {
+            <tr>
+                <td>@enclosure.EnclosureId</td>
+                <td>@enclosure.Name</td>
+                <td>@enclosure.Size</td>
+                <td>@enclosure.Climate</td>
+                <td>@enclosure.Habitat</td>
+                <td>@enclosure.SecurityLevel</td>
+                <td>
+                    <a class="btn btn-info btn-sm" asp-controller="Enclosure" asp-action="EnclosureAnimals" 
+                    asp-route-enclosureId="@enclosure.EnclosureId">Bekijk Dieren</a>
+                </td>    
+                <td style="white-space:nowrap">
+                    <a class="btn btn-primary btn-sm" asp-controller="Enclosure" asp-action="Edit"
+                    asp-route-id="@enclosure.EnclosureId">Edit</a>
+
+                    <a class="btn btn-danger btn-sm" asp-controller="Enclosure" asp-action="Delete"
+                    asp-route-id="@enclosure.EnclosureId" onclick="return confirm('Are you Sure?')">Delete</a>
+
+                    <!-- Knop om de modal te openen -->
+                    <button class="btn btn-dark btn-sunset btn-sm" onclick="ShowSunsetModal(@enclosure.EnclosureId)">Sunset🌙</button>
+
+                    <!-- Knop om de modal te openen -->
+                    <button class="btn btn-warning btn-sunrise btn-sm" onclick="ShowSunriseModal(@enclosure.EnclosureId)">Sunrise☀️</button>
+
+                    <a class="btn btn-outline-warning btn-sm" asp-controller="Enclosure" asp-action="FeedingTime"
+                    asp-route-enclosureId="@enclosure.EnclosureId">FeedingTime</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Sunset Modal, the styling of the modal and the ids we need to connect to elements and functions-->
+<div class="modal fade" id="sunsetModal" tabindex="-1" aria-labelledby="sunsetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sunsetModalLabel">Deze dieren zijn aan het slapen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sunsetAnimalsContainer"> <!--this is where the body of the modal is displayed-->
+                    <p>Geen dieren aanwezig of aan het slapen</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sunrise Modal, the styling of the modal and the ids we need to connect to elements and functions-->
+<div class="modal fade" id="sunriseModal" tabindex="-1" aria-labelledby="sunriseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sunriseModalLabel">Deze dieren zijn wakker</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="sunriseAnimalsContainer">
+                    <!--this is where the body of the modal is displayed-->
+                    <p>Geen dieren aanwezig of wakker</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        function ShowSunsetModal(enclosureId) {
+            $.ajax({
+                url: "/Enclosures/Sunset/" + enclosureId,   //at this Url the data gets requested
+                type: "GET",                                //This is the restful request that's being used so in this case it Gets data
+                success: function (data) {
+                    console.log("Sunset modal wordt geopend voor enclosure:", enclosureId);
+                    $("#sunsetAnimalsContainer").html(data); //here the data at a succes of the request gets parsed to an object with the id sunsetAnimalsContainer
+                    $("#sunsetModal").modal("show");
+                },
+            });
+        }
+
+        function ShowSunriseModal(enclosureId) {
+            $.ajax({
+                url: "/Enclosures/Sunrise/" + enclosureId,  //at this Url the data gets requested
+                type: "GET",                                //This is the restful request that's being used so in this case it Gets data
+                success: function (data) {
+                    console.log("Sunrise modal wordt geopend voor enclosure:", enclosureId);
+                    $("#sunriseAnimalsContainer").html(data); //here the data at a succes of the request gets parsed to an object with the id sunsetAnimalsContainer
+                    $("#sunriseModal").modal("show");
+                },
+            });
+        }
+
+    </script>
+}
+
+    

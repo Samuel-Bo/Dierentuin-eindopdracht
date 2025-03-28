@@ -2,7 +2,27 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container text-center mt-5">
+    <h1 class="display-3 font-weight-bold">
+        Welcome to Your <span class="text-dark">Zoo</span>: @ViewBag.ZooName!
+    </h1>
+    <p class="lead text-secondary">Discover the wonders of the animal kingdom.</p>
+
+    <a href="https://www.nationalgeographic.com/animals" class="btn btn-success btn-lg my-3" target="_blank">
+        Explore Amazing Animal Facts
+    </a>
+
+    <div class="card shadow-lg mt-4 p-4 bg-light">
+        <h2 class="text-dark">Did You Know?</h2>
+        <p class="text-justify text-dark" style="font-size: 1.2rem; line-height: 1.8;">
+            Octopuses have three hearts and blue blood due to copper-rich hemocyanin. Giraffes sleep only 5 to 30 minutes per day, often in short naps.
+            A group of flamingos is called a "flamboyance." Sloths take up to a month to digest food. Elephants can "hear" with their feet, detecting vibrations
+            in the ground. Some frogs freeze solid in winter and thaw out in spring as if nothing happened. Honey never spoils—ancient Egyptian tombs contained
+            still-edible honey! Cows have best friends and get stressed when separated. Cheetahs can reach 60 mph in seconds. Parrots mimic human speech, sometimes using words in context.
+            Otters hold hands while sleeping to avoid drifting apart. Penguins propose to their mates by offering a pebble. A shrimp’s heart is in its head.
+            Koala fingerprints are almost identical to human ones. Starfish have no brains but can regenerate lost arms. Hummingbirds are the only birds that can fly backward.
+            An octopus can squeeze through any hole larger than its beak. Tigers have striped skin, not just striped fur. Crocodiles go through 3,000 teeth in their lifetime.
+            Bats are the only mammals capable of sustained flight!
+        </p>
+    </div>
 </div>
